@@ -1,0 +1,9 @@
+prefix=@prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: echoicebox
+Description: Evas virtual listbox smart object
+Version: @PACKAGE_VERSION@
+Cflags: -I${includedir}
+Libs: -L${libdir}
