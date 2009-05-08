@@ -68,6 +68,8 @@ Evas_Object* choicebox_new(Evas* evas,
 
 void choicebox_set_size(Evas_Object* e, int size);
 void choicebox_invalidate_item(Evas_Object* e, int item_num);
+/* Invalidates [item_from,item_to) half-open interval */
+void choicebox_invalidate_interval(Evas_Object* e, int item_from, int item_to);
 
 /* This is mostly for keyboard handling */
 

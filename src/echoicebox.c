@@ -441,27 +441,27 @@ void choicebox_set_size(Evas_Object* o, int new_size)
     _choicebox_update(o, &new);
 }
 
-void choicebox_invalidate_item(Evas_Object* o, int item_num)
+void choicebox_invalidate_interval(Evas_Object* o, int item_from, int item_to)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    if(item_num < 0 || item_num >= data->st.size)
-    {
-        /* Invalidation of item which is not in list. */
-        fprintf(stderr, "ERR: Invalidating %d-th item in [0,%d) list.",
-                item_num, data->st.size);
-        return;
-    }
 
-    if(item_num < data->st.top_item ||
-       item_num >= data->st.top_item + data->st.pagesize)
-    {
-        /* Invalidation of invisible item. Harmless NOOP */
-        return;
-    }
+    /* [from, to) = [item_from, item_to) x [first_visible, last_visible) */
+    int from = MAX(data->st.top_item, item_from);
+    int to = MIN(data->st.top_item + data->st.pagesize,
+                 MIN(data->st.size, item_to));
+    int i;
 
-    int nth = item_num - data->st.top_item;
-    Evas_Object* item = eina_array_data_get(data->items, nth);
-    (*data->draw_handler)(o, item, item_num, nth, data->param);
+    for(i = from; i < to; ++i)
+    {
+        int nth = i - data->st.top_item;
+        Evas_Object* item = eina_array_data_get(data->items, nth);
+        (*data->draw_handler)(o, item, i, nth, data->param);
+    }
+}
+
+void choicebox_invalidate_item(Evas_Object* o, int item_num)
+{
+    choicebox_invalidate_interval(o, item_num, item_num+1);
 }
 
 /* Navigating items */
