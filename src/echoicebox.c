@@ -255,10 +255,13 @@ static void _choicebox_del(Evas_Object* o)
     choicebox_t* data = evas_object_smart_data_get(o);
     if(data)
     {
-        int size = eina_array_count_get(data->items);
-        while(size--)
-            evas_object_del(eina_array_pop(data->items));
-        eina_array_free(data->items);
+        if(data->items)
+        {
+            int size = eina_array_count_get(data->items);
+            while(size--)
+                evas_object_del(eina_array_pop(data->items));
+            eina_array_free(data->items);
+        }
 
         evas_object_del(data->clip);
 
@@ -361,10 +364,7 @@ Evas_Object* choicebox_new(Evas* evas,
     Evas_Object* o = evas_object_smart_add(evas, _choicebox_smart_get());
     choicebox_t* data = evas_object_smart_data_get(o);
     if(!data)
-    {
-        evas_object_del(o);
-        return NULL;
-    }
+        goto err;
 
     data->st.size = 0;
 
@@ -384,20 +384,35 @@ Evas_Object* choicebox_new(Evas* evas,
 
     /* Theme info */
     data->theme_file = strdup(theme_file);
+    if(!data->theme_file)
+        goto err;
     data->item_group = strdup(item_group);
+    if(!data->item_group)
+        goto err;
 
     /* Widgets */
     data->clip = evas_object_rectangle_add(evas);
+    if(!data->clip)
+        goto err;
     evas_object_color_set(data->clip, 255, 255, 255, 255);
     evas_object_name_set(data->clip, "choicebox/background");
 
     Evas_Object* tmpitem = edje_object_add(evas);
-    edje_object_file_set(tmpitem, data->theme_file, data->item_group);
+    if(!edje_object_file_set(tmpitem, data->theme_file, data->item_group))
+    {
+        evas_object_del(tmpitem);
+        goto err;
+    }
+
     hack_update_min_height(tmpitem);
     evas_object_size_hint_min_get(tmpitem, NULL, &data->item_minh);
     evas_object_del(tmpitem);
 
     return o;
+
+err:
+    evas_object_del(o);
+    return NULL;
 }
 
 void choicebox_set_size(Evas_Object* o, int new_size)
