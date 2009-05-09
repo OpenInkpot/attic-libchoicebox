@@ -514,6 +514,10 @@ void choicebox_nextpage(Evas_Object* o)
     if(!data->st.pagesize) return;
     if(!data->st.size) return;
 
+    /* Don't turn page if already on last page */
+    if(data->st.top_item + data->st.pagesize >= data->st.size)
+        return;
+
     choicebox_state_t new = data->st;
     new.top_item = MIN(new.size - 1, new.top_item + new.pagesize);
 
