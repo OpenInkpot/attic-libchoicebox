@@ -35,20 +35,18 @@ typedef void (*choicebox_draw_handler_t)(Evas_Object* choicebox,
                                          int page_position,
                                          void* param);
 
-typedef void (*choicebox_footer_draw_handler_t)(Evas_Object* choicebox,
-                                                Evas_Object* footer,
-                                                int cur_page,
-                                                int total_pages,
-                                                void* param);
+typedef void (*choicebox_page_updated_t)(Evas_Object* choicebox,
+                                         int cur_page,
+                                         int total_pages,
+                                         void* param);
 
 /*
- * Choicebox uses two groups in theme file, called $group_prefix/item and
- * $group_prefix/footer.
+ * Choicebox uses groups $item_group from theme file.
  *
- * Both groups should have data item called 'min_height'. As soon as edje can
+ * This group should have data item called 'min_height'. As soon as edje can
  * read the min size from the group, this requirement will be lifted.
  *
- * Items will be sent the following signals:
+ * Instances will be sent the following signals:
  * - select, for setting selected state
  * - deselect, for unsetting selected state
  * - set_even, for setting "even" variant of state, if necessary
@@ -60,10 +58,10 @@ typedef void (*choicebox_footer_draw_handler_t)(Evas_Object* choicebox,
  */
 Evas_Object* choicebox_new(Evas* evas,
                            const char* theme_file, /* It sucks, do you know better way? */
-                           const char* group_prefix,
+                           const char* item_group,
                            choicebox_handler_t handler,
                            choicebox_draw_handler_t draw_handler,
-                           choicebox_footer_draw_handler_t footer_draw_handler,
+                           choicebox_page_updated_t page_handler,
                            void* param);
 
 void choicebox_set_size(Evas_Object* e, int size);

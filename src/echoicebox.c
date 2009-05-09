@@ -53,19 +53,16 @@ typedef struct
     /* Data */
     choicebox_handler_t handler;
     choicebox_draw_handler_t draw_handler;
-    choicebox_footer_draw_handler_t footer_draw_handler;
+    choicebox_page_updated_t page_handler;
     void* param;
 
     /* Theme info */
     char* theme_file;
     char* item_group;
-    char* footer_group;
-    int footer_minh;
     int item_minh;
 
     /* Widgets */
     Evas_Object* clip;
-    Evas_Object* footer;
     Eina_Array* items;
 
 } choicebox_t;
@@ -149,7 +146,7 @@ static void _choicebox_update(Evas_Object* o, const choicebox_state_t* new)
        int page = new->pagesize ? DIV_CEIL(new->top_item, new->pagesize) : 0;
        int pages = new->pagesize ? DIV_CEIL(new->size, new->pagesize) : 0;
 
-       (*data->footer_draw_handler)(o, data->footer, page, pages, data->param);
+       (*data->page_handler)(o, page, pages, data->param);
     }
 }
 
@@ -177,16 +174,10 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
     evas_object_move(data->clip, ox, oy);
     evas_object_resize(data->clip, ow, oh);
 
-    /** Update footer **/
-
-    evas_object_move(data->footer, ox, oy + oh - data->footer_minh);
-    evas_object_resize(data->footer, ow, data->footer_minh);
-
     /** Update items **/
 
     /* Calculate pagesize */
-    int ih = oh - data->footer_minh;
-    new.pagesize = ih / data->item_minh;
+    new.pagesize = oh / data->item_minh;
 
     /* Fix the widgets amount */
     int curitems = eina_array_count_get(data->items);
@@ -218,8 +209,8 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
     {
         /* Fix the widgets position */
 
-        int item_h = ih / new.pagesize;
-        int gap = ih - item_h*new.pagesize; /* To be spread amongst the items */
+        int item_h = oh / new.pagesize;
+        int gap = oh - item_h*new.pagesize; /* To be spread amongst the items */
 
         int i;
         int item_x = ox;
@@ -266,11 +257,9 @@ static void _choicebox_del(Evas_Object* o)
         eina_array_free(data->items);
 
         evas_object_del(data->clip);
-        evas_object_del(data->footer);
 
         free(data->theme_file);
         free(data->item_group);
-        free(data->footer_group);
 
         free(data);
     }
@@ -359,10 +348,10 @@ static void hack_update_min_height(Evas_Object* o)
 
 Evas_Object* choicebox_new(Evas* evas,
                            const char* theme_file,
-                           const char* group_prefix,
+                           const char* item_group,
                            choicebox_handler_t handler,
                            choicebox_draw_handler_t draw_handler,
-                           choicebox_footer_draw_handler_t footer_draw_handler,
+                           choicebox_page_updated_t page_handler,
                            void* param)
 {
     Evas_Object* o = evas_object_smart_add(evas, _choicebox_smart_get());
@@ -378,7 +367,7 @@ Evas_Object* choicebox_new(Evas* evas,
     /* Data */
     data->handler = handler;
     data->draw_handler = draw_handler;
-    data->footer_draw_handler = footer_draw_handler;
+    data->page_handler = page_handler;
     data->param = param;
 
     /* GUI */
@@ -391,21 +380,12 @@ Evas_Object* choicebox_new(Evas* evas,
 
     /* Theme info */
     data->theme_file = strdup(theme_file);
-    asprintf(&data->item_group, "%s/item", group_prefix);
-    asprintf(&data->footer_group, "%s/footer", group_prefix);
+    data->item_group = strdup(item_group);
 
     /* Widgets */
     data->clip = evas_object_rectangle_add(evas);
     evas_object_color_set(data->clip, 255, 255, 255, 255);
     evas_object_name_set(data->clip, "choicebox/background");
-
-    data->footer = edje_object_add(evas);
-    edje_object_file_set(data->footer, data->theme_file, data->footer_group);
-    hack_update_min_height(data->footer);
-    evas_object_show(data->footer);
-    evas_object_size_hint_min_get(data->footer, NULL, &data->footer_minh);
-    evas_object_resize(data->footer, ow, data->footer_minh);
-    evas_object_clip_set(data->footer, data->clip);
 
     Evas_Object* tmpitem = edje_object_add(evas);
     edje_object_file_set(tmpitem, data->theme_file, data->item_group);
