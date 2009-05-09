@@ -205,6 +205,10 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
         }
     }
 
+    /* Ajust selection if necessary */
+    if(new.sel >= new.top_item + new.pagesize)
+        new.sel = new.top_item + new.pagesize - 1;
+
     if(new.pagesize != 0)
     {
         /* Fix the widgets position */
