@@ -126,6 +126,16 @@ static void _choicebox_update_item(Evas_Object* o, int nth,
         (*data->draw_handler)(o, item, nth, new->num, data->param);
 }
 
+static void _run_page_handler(Evas_Object* o)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+
+   int page = data->st.pagesize ? DIV_CEIL(data->st.top_item, data->st.pagesize) : 0;
+   int pages = data->st.pagesize ? DIV_CEIL(data->st.size, data->st.pagesize) : 0;
+
+   (*data->page_handler)(o, page, pages, data->param);
+}
+
 static void _choicebox_update(Evas_Object* o, const choicebox_state_t* new)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
@@ -142,12 +152,7 @@ static void _choicebox_update(Evas_Object* o, const choicebox_state_t* new)
     }
 
     if(old.top_item != new->top_item || old.pagesize != new->pagesize)
-    {
-       int page = new->pagesize ? DIV_CEIL(new->top_item, new->pagesize) : 0;
-       int pages = new->pagesize ? DIV_CEIL(new->size, new->pagesize) : 0;
-
-       (*data->page_handler)(o, page, pages, data->param);
-    }
+       _run_page_handler(o);
 }
 
 /**
@@ -407,6 +412,8 @@ Evas_Object* choicebox_new(Evas* evas,
     hack_update_min_height(tmpitem);
     evas_object_size_hint_min_get(tmpitem, NULL, &data->item_minh);
     evas_object_del(tmpitem);
+
+    _run_page_handler(o);
 
     return o;
 
