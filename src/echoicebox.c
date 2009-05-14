@@ -579,3 +579,19 @@ void choicebox_activate_current(Evas_Object* o, bool is_alt)
 
     _choicebox_activate(o, data->st.sel, is_alt);
 }
+
+void choicebox_set_selection(Evas_Object* o, int sel)
+{
+   choicebox_t* data = evas_object_smart_data_get(o);
+
+   if(sel < -1 || sel > data->st.size)
+      return;
+
+   choicebox_state_t new = data->st;
+   new.sel = sel;
+
+   if(new.sel != -1 && new.pagesize != 0)
+      new.top_item = new.sel / new.pagesize * new.pagesize;
+
+   _choicebox_update(o, &new);
+}
