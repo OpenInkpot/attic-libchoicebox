@@ -123,7 +123,7 @@ static void _choicebox_update_item(Evas_Object* o, int nth,
     }
 
     if(!old->is_used || old->num != new->num)
-        (*data->draw_handler)(o, item, nth, new->num, data->param);
+        (*data->draw_handler)(o, item, new->num, nth, data->param);
 }
 
 static void _run_page_handler(Evas_Object* o)
