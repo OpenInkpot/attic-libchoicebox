@@ -1,8 +1,8 @@
 Source: echoicebox
 Section: gui
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Build-Depends: debhelper (>= 7), automake, pkg-config, libecore-dev, libevas-dev, libedje-dev
-XCS-Cross-Host-Build-Depends: debhelper (>= 7), automake, pkg-config
+Build-Depends: debhelper (>= 7), automake, libtool, pkg-config, libecore-dev, libevas-dev, libedje-dev
+XCS-Cross-Host-Build-Depends: debhelper (>= 7), automake, libtool, pkg-config
 XCS-Cross-Build-Depends: libecore-dev, libevas-dev, libedje-dev
 Priority: optional
 Standards-Version: 3.8.0
