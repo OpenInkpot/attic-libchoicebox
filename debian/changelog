@@ -1,3 +1,9 @@
+echoicebox (0.1-2) asimov; urgency=low
+
+  * Added echoicebox-data with default theme.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 17 May 2009 00:39:13 +0700
+
 echoicebox (0.1-1) asimov; urgency=low
 
   * Initial release.
