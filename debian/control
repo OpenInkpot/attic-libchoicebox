@@ -10,7 +10,7 @@ Standards-Version: 3.8.0
 Package: libechoicebox0
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, echoicebox-data (= ${binary:Version})
 Description: choicebox widget for EFL -- runtime library
  choicebox is a EFL virtual list widget optimized for
  non-touch/non-mousescreens.
@@ -26,3 +26,13 @@ Description: choicebox widget for EFL -- development files
  non-touch/non-mousescreens.
  .
  This package contains header files and symlinks necessary to link with library.
+
+Package: echoicebox-data
+Priority: optional
+Architecture: all
+Depends:
+Description: choicebox widget for EFL -- data files
+ choicebox is a EFL virtual list widget optimized for
+ non-touch/non-mousescreens.
+ .
+ This package contains data files with default theme.
