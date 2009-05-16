@@ -3,8 +3,8 @@ COMPILED_THEMES=$(patsubst %.edc,%.edj,$(THEMES))
 
 theme_dir=$(datadir)/echoicebox
 
-%.edj: %.edc
-	edje_cc $< $@
+#%.edj: %.edc
+#	edje_cc $< $@
 
 install-data-hook: $(COMPILED_THEMES)
 	for theme in $(COMPILED_THEMES); do \
