@@ -1,0 +1,868 @@
+images {
+    image, "grid1-side-right.png" COMP;
+    image, "grid1-body.png" COMP;
+    image, "grid1-side-left.png" COMP;
+    image, "grid2-side-right.png" COMP;
+    image, "grid2-body.png" COMP;
+    image, "grid2-side-left.png" COMP;
+    image, "sel-side.png" COMP;
+}
+
+styles {
+    style {
+        name, "values";
+        base, "font=serif font_size=28 color=#888 align=right valign=bottom";
+        tag, "active" "+color=#000";
+        tag, "/active" "-";
+    }
+}
+
+collections {
+   group {
+      name, "full";
+      parts {
+         part {
+            name, "clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "left-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 14 -1; }
+               image {
+                  normal, "grid1-side-left.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-side-left.png";
+               }
+            }
+         }
+         part {
+            name, "right-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 0.0; offset, -15 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+               image {
+                  normal, "grid1-side-right.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-side-right.png";
+               }
+            }
+         }
+         part {
+            name, "background";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 15 0; }
+               rel2 { relative, 1.0 1.0; offset, -16 -1; }
+               image {
+                  normal, "grid1-body.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 1 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-body.png";
+               }
+            }
+         }
+
+         part {
+            name, "sel-clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "sel-background";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+         part {
+            name, "sel-left-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 14 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-right-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 0.0; offset, -15 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-top";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 0.0; offset, -1 1; }
+            }
+         }
+         part {
+            name, "sel-bottom";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 1.0; offset, 0 -2; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+
+         part {
+            name, "title";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.0;
+                  text, "[TITLE]";
+                  font, "serif";
+                  size, 28;
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 0; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+         part {
+            name, "value";
+            type, TEXTBLOCK;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               text {
+                  style, "values";
+                  text, "[VALUE]";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 35; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+         part {
+            name, "text";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.4;
+                  text, "[TEXT]";
+                  font, "serif";
+                  size, "28";
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 0; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+      }
+      data {
+         /* HACK: until edje fetches size_hints */
+         item, "min_height" 78;
+      }
+      programs {
+         program {
+            name, "set_even";
+            signal, "set_even";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "default", 0.0);
+               set_state(PART:"left-side", "default", 0.0);
+               set_state(PART:"right-side", "default", 0.0);
+            }
+         }
+         program {
+            name, "set_odd";
+            signal, "set_odd";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "alternate", 0.0);
+               set_state(PART:"left-side", "alternate", 0.0);
+               set_state(PART:"right-side", "alternate", 0.0);
+            }
+         }
+         program {
+            name, "empty";
+            signal, "empty";
+            script {
+               set_state(PART:"clipper", "default", 0.0);
+            }
+         }
+         program {
+            name, "select";
+            signal, "select";
+            script {
+               set_state(PART:"sel-clipper", "enabled", 0.0);
+            }
+         }
+         program {
+            name, "deselect";
+            signal, "deselect";
+            script {
+               set_state(PART:"sel-clipper", "default", 0.0);
+            }
+         }
+      }
+   }
+   group {
+      name, "settings-left";
+      parts {
+         part {
+            name, "clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "left-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 14 -1; }
+               image {
+                  normal, "grid1-side-left.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-side-left.png";
+               }
+            }
+         }
+         part {
+            name, "right-side";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 238 238 238 255;
+               rel1 { relative, 1.0 0.0; offset, -1 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+         part {
+            name, "background";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 15 0; }
+               rel2 { relative, 1.0 1.0; offset, -2 -1; }
+               image {
+                  normal, "grid1-body.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 1 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-body.png";
+               }
+            }
+         }
+         part {
+            name, "sel-clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "sel-background";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+         part {
+            name, "sel-left-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 14 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-right-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 0.0; offset, -1 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 1 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-top";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 0.0; offset, -1 1; }
+            }
+         }
+         part {
+            name, "sel-bottom";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 1.0; offset, 0 -2; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+
+         part {
+            name, "title";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.0;
+                  text, "[TITLE]";
+                  font, "serif";
+                  size, 28;
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 0; }
+               rel2 { relative, 1.0 1.0; offset, -4 -1; }
+            }
+         }
+         part {
+            name, "value";
+            type, TEXTBLOCK;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               text {
+                  style, "values";
+                  text, "[VALUE]";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 35; }
+               rel2 { relative, 1.0 1.0; offset, -4 -1; }
+            }
+         }
+         part {
+            name, "text";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.4;
+                  text, "[TEXT]";
+                  font, "serif";
+                  size, "28";
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 17 0; }
+               rel2 { relative, 1.0 1.0; offset, -4 -1; }
+            }
+         }
+      }
+      data {
+         /* HACK: until edje fetches size_hints */
+         item, "min_height" 78;
+      }
+      programs {
+         program {
+            name, "set_even";
+            signal, "set_even";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "default", 0.0);
+               set_state(PART:"left-side", "default", 0.0);
+            }
+         }
+         program {
+            name, "set_odd";
+            signal, "set_odd";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "alternate", 0.0);
+               set_state(PART:"left-side", "alternate", 0.0);
+            }
+         }
+         program {
+            name, "empty";
+            signal, "empty";
+            script {
+               set_state(PART:"clipper", "default", 0.0);
+            }
+         }
+         program {
+            name, "select";
+            signal, "select";
+            script {
+               set_state(PART:"sel-clipper", "enabled", 0.0);
+            }
+         }
+         program {
+            name, "deselect";
+            signal, "deselect";
+            script {
+               set_state(PART:"sel-clipper", "default", 0.0);
+            }
+         }
+      }
+   }
+   group {
+      name, "settings-right";
+      parts {
+         part {
+            name, "clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "left-side";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 238 238 238 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 0 -1; }
+            }
+         }
+         part {
+            name, "right-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 0.0; offset, -15 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+               image {
+                  normal, "grid1-side-right.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-side-right.png";
+               }
+            }
+         }
+         part {
+            name, "background";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 1 0; }
+               rel2 { relative, 1.0 1.0; offset, -15 -1; }
+               image {
+                  normal, "grid1-body.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 1 2;
+                  }
+               }
+            }
+            description {
+               state, "alternate" 0.0;
+               inherit, "default" 0.0;
+               image {
+                  normal, "grid2-body.png";
+               }
+            }
+         }
+         part {
+            name, "sel-clipper";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+            description {
+               state, "enabled" 0.0;
+               inherit, "default" 0.0;
+               color, 255 255 255 255;
+            }
+         }
+         part {
+            name, "sel-background";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+         part {
+            name, "sel-left-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 0.0 1.0; offset, 0 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 1 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-right-side";
+            type, IMAGE;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 0.0; offset, -15 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+               image {
+                  normal, "sel-side.png";
+               }
+               fill {
+                  size {
+                     relative, 0.0 0.0;
+                     offset, 15 4;
+                  }
+               }
+            }
+         }
+         part {
+            name, "sel-top";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 0.0; offset, -1 1; }
+            }
+         }
+         part {
+            name, "sel-bottom";
+            type, RECT;
+            mouse_events, 0;
+            clip_to, "sel-clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               rel1 { relative, 0.0 1.0; offset, 0 -2; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+
+
+         part {
+            name, "title";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.0;
+                  text, "[TITLE]";
+                  font, "serif";
+                  size, 28;
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 3 0; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+         part {
+            name, "value";
+            type, TEXTBLOCK;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               text {
+                  style, "values";
+                  text, "[VALUE]";
+               }
+               rel1 { relative, 0.0 0.0; offset, 3 35; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+         part {
+            name, "text";
+            type, TEXT;
+            mouse_events, 0;
+            clip_to, "clipper";
+            description {
+               state, "default" 0.0;
+               color, 0 0 0 255;
+               text {
+                  align, 0.0 0.4;
+                  text, "[TEXT]";
+                  font, "serif";
+                  size, "28";
+                  text_class, "chrome";
+               }
+               rel1 { relative, 0.0 0.0; offset, 3 0; }
+               rel2 { relative, 1.0 1.0; offset, -18 -1; }
+            }
+         }
+      }
+      data {
+         /* HACK: until edje fetches size_hints */
+         item, "min_height" 78;
+      }
+      programs {
+         program {
+            name, "set_even";
+            signal, "set_even";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "default", 0.0);
+               set_state(PART:"right-side", "default", 0.0);
+            }
+         }
+         program {
+            name, "set_odd";
+            signal, "set_odd";
+            script {
+               set_state(PART:"clipper", "enabled", 0.0);
+               set_state(PART:"background", "alternate", 0.0);
+               set_state(PART:"right-side", "alternate", 0.0);
+            }
+         }
+         program {
+            name, "empty";
+            signal, "empty";
+            script {
+               set_state(PART:"clipper", "default", 0.0);
+            }
+         }
+         program {
+            name, "select";
+            signal, "select";
+            script {
+               set_state(PART:"sel-clipper", "enabled", 0.0);
+            }
+         }
+         program {
+            name, "deselect";
+            signal, "deselect";
+            script {
+               set_state(PART:"sel-clipper", "default", 0.0);
+            }
+         }
+      }
+   }
+}
