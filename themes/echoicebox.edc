@@ -220,7 +220,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.0;
-                  text, "[TITLE]";
+                  text, "";
                   font, "serif";
                   size, 28;
                   text_class, "chrome";
@@ -238,7 +238,7 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
-                  text, "[VALUE]";
+                  text, "";
                }
                rel1 { relative, 0.0 0.0; offset, 17 35; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -254,7 +254,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.4;
-                  text, "[TEXT]";
+                  text, "";
                   font, "serif";
                   size, "28";
                   text_class, "chrome";
@@ -498,7 +498,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.0;
-                  text, "[TITLE]";
+                  text, "";
                   font, "serif";
                   size, 28;
                   text_class, "chrome";
@@ -516,7 +516,7 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
-                  text, "[VALUE]";
+                  text, "";
                }
                rel1 { relative, 0.0 0.0; offset, 17 35; }
                rel2 { relative, 1.0 1.0; offset, -4 -1; }
@@ -532,7 +532,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.4;
-                  text, "[TEXT]";
+                  text, "";
                   font, "serif";
                   size, "28";
                   text_class, "chrome";
@@ -775,7 +775,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.0;
-                  text, "[TITLE]";
+                  text, "";
                   font, "serif";
                   size, 28;
                   text_class, "chrome";
@@ -793,7 +793,7 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
-                  text, "[VALUE]";
+                  text, "";
                }
                rel1 { relative, 0.0 0.0; offset, 3 35; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -809,7 +809,7 @@ collections {
                color, 0 0 0 255;
                text {
                   align, 0.0 0.4;
-                  text, "[TEXT]";
+                  text, "";
                   font, "serif";
                   size, "28";
                   text_class, "chrome";
