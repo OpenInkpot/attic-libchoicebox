@@ -11,9 +11,9 @@ images {
 styles {
     style {
         name, "values";
-        base, "font=serif font_size=28 color=#888 align=right valign=bottom";
-        tag, "active" "+color=#000";
-        tag, "/active" "-";
+        base, "font=serif font_size=28 color=#000 align=right valign=bottom";
+        tag, "inactive" "+color=#888";
+        tag, "/inactive" "-";
     }
 }
 
