@@ -194,6 +194,7 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
         for(i = 0; i < new.pagesize - curitems; ++i)
         {
             Evas_Object* item = edje_object_add(evas);
+            evas_object_stack_above(item, data->clip);
             edje_object_file_set(item, data->theme_file, data->item_group);
             evas_object_show(item);
             evas_object_clip_set(item, data->clip);
