@@ -11,7 +11,7 @@ images {
 styles {
     style {
         name, "values";
-        base, "font=serif font_size=28 color=#000 align=right valign=bottom";
+        base, "font=serif font_size=24 color=#000 align=right valign=bottom";
         tag, "inactive" "+color=#888";
         tag, "/inactive" "-";
     }
@@ -222,7 +222,7 @@ collections {
                   align, 0.0 0.0;
                   text, "";
                   font, "serif";
-                  size, 28;
+                  size, 24;
                   text_class, "chrome";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
@@ -500,7 +500,7 @@ collections {
                   align, 0.0 0.0;
                   text, "";
                   font, "serif";
-                  size, 28;
+                  size, 24;
                   text_class, "chrome";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
@@ -777,7 +777,7 @@ collections {
                   align, 0.0 0.0;
                   text, "";
                   font, "serif";
-                  size, 28;
+                  size, 24;
                   text_class, "chrome";
                }
                rel1 { relative, 0.0 0.0; offset, 3 0; }
