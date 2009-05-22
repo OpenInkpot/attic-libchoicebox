@@ -1,3 +1,13 @@
+echoicebox (0.1-5) asimov; urgency=low
+
+  * Fixed stacking order for created items (previously such items appeared
+    above Evas_Objects created after echoicebox).
+  * Adjusted default theme: font size for two-line items was too big
+  * page_handler was called too early during widget creation, postponed
+    until evas_object_show() on echoicebox.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sat, 23 May 2009 00:43:41 +0700
+
 echoicebox (0.1-4) asimov; urgency=low
 
   * echoicebox-data: Values text made active by default, and <inactive>
