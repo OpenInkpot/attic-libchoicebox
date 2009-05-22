@@ -297,6 +297,7 @@ static void _choicebox_resize(Evas_Object* o, Evas_Coord w, Evas_Coord h)
 static void _choicebox_show(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
+    _run_page_handler(o);
     evas_object_show(data->clip);
 }
 
@@ -413,8 +414,6 @@ Evas_Object* choicebox_new(Evas* evas,
     hack_update_min_height(tmpitem);
     evas_object_size_hint_min_get(tmpitem, NULL, &data->item_minh);
     evas_object_del(tmpitem);
-
-    _run_page_handler(o);
 
     return o;
 
