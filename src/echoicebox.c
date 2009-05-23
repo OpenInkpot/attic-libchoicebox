@@ -595,3 +595,9 @@ void choicebox_set_selection(Evas_Object* o, int sel)
 
    _choicebox_update(o, &new);
 }
+
+int choicebox_get_selection(Evas_Object* o)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+    return data->st.sel;
+}
