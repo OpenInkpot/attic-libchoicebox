@@ -1,3 +1,10 @@
+echoicebox (0.1-7) asimov; urgency=low
+
+  * Added Russian and Ukrainian localization from
+    choicebox_aux_edje_footer_handler.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sat, 23 May 2009 22:14:51 +0700
+
 echoicebox (0.1-6) asimov; urgency=low
 
   * choicebox_get_selection
