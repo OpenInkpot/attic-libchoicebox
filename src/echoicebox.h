@@ -81,4 +81,48 @@ void choicebox_activate_current(Evas_Object* e, bool is_alt);
 
 void choicebox_set_selection(Evas_Object* e, int item_num);
 
+/*
+ * Auxiliary utility functions
+ */
+
+/*
+ * Sample implementation of footer (page) handler, drawing (l10ed) "N/M" text in
+ * given edje text field.
+ *
+ * Usage:
+ *
+ * void page_handler(Evas_Object* choicebox, int cur_page, int total_pages, void* param)
+ * {
+ *     Evas* canvas = evas_object_evas_get(choicebox);
+ *     Evas_Object* footer = evas_object_name_find(canvas, "footer");
+ *
+ *     choicebox_aux_footer_handler(footer, "pagination", cur_page, total_pages);
+ * }
+ */
+void choicebox_aux_edje_footer_hadler(Evas_Object* footer, const char* part,
+                                      int cur_page, int total_pages);
+
+/*
+ * Sample implementation of Key_Down handler:
+ * - 1,2..,9,0 activate 0..10th item
+ * - Up/Down moves cursor up/down
+ * - Left/Right/Prior/Next switches page
+ * - Enter activates current item
+ *
+ * Note that Escape is not handled!
+ *
+ * Usage:
+ *
+ * void key_down_handler(void* param, Evas* e, Evas_Object* o, void* event_info)
+ * {
+ *     Evas_Event_Key_down* ev = (Evas_Event_Key_Down*)event_info;
+ *     / * custom processing as needed * /
+ *
+ *     choicebox_aux_key_down_handler(o, ev);
+ * }
+ */
+
+void choicebox_aux_key_down_handler(Evas_Object* choicebox,
+                                    Evas_Event_Key_Down* ev);
+
 #endif
