@@ -80,6 +80,10 @@ void choicebox_activate_nth_visible(Evas_Object* e, int nth, bool is_alt);
 void choicebox_activate_current(Evas_Object* e, bool is_alt);
 
 void choicebox_set_selection(Evas_Object* e, int item_num);
+/*
+ * Returns -1 if no item is selected.
+ */
+int choicebox_get_selection(Evas_Object* e);
 
 /*
  * Auxiliary utility functions
