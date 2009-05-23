@@ -1,3 +1,11 @@
+echoicebox (0.1-6) asimov; urgency=low
+
+  * choicebox_get_selection
+  * choicebox_aux_edje_footer_handler
+  * choicebox_aux_key_down_handler
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sat, 23 May 2009 18:25:51 +0700
+
 echoicebox (0.1-5) asimov; urgency=low
 
   * Fixed stacking order for created items (previously such items appeared
