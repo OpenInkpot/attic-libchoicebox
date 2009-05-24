@@ -25,7 +25,7 @@ static void _activate(Evas_Object* o, char numchar, bool is_alt)
     if(numchar == '0')
         choicebox_activate_nth_visible(o, 10, is_alt);
     else
-        choicebox_activate_nth_visible(0, numchar - '1', is_alt);
+        choicebox_activate_nth_visible(o, numchar - '1', is_alt);
 }
 
 void choicebox_aux_key_down_handler(Evas_Object* o,
