@@ -1,3 +1,9 @@
+echoicebox (0.1-10) asimov; urgency=low
+
+  * Added drawing arrows to the choicebox_aux_edje_footer_handler.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 26 May 2009 04:03:10 +0700
+
 echoicebox (0.1-9) asimov; urgency=low
 
   * Fixed typo in choicebox_aux_key_down_handler.
