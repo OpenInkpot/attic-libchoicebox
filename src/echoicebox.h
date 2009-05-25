@@ -103,7 +103,7 @@ int choicebox_get_selection(Evas_Object* e);
  *     choicebox_aux_footer_handler(footer, "pagination", cur_page, total_pages);
  * }
  */
-void choicebox_aux_edje_footer_hadler(Evas_Object* footer, const char* part,
+void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
                                       int cur_page, int total_pages);
 
 /*
