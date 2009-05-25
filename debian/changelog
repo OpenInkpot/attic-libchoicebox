@@ -1,3 +1,9 @@
+echoicebox (0.1-9) asimov; urgency=low
+
+  * Fixed typo in choicebox_aux_key_down_handler.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 25 May 2009 18:59:50 +0700
+
 echoicebox (0.1-8) asimov; urgency=low
 
   * Fixed segfault in choicebox_aux_key_down_handler.
