@@ -6,6 +6,10 @@
 #include <libintl.h>
 #include <string.h>
 
+#define LEFT_ARROW "⇦"
+#define RIGHT_ARROW "⇨"
+#define NO_ARROW " "
+
 void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
                                        int cur_page, int total_pages)
 {
@@ -16,7 +20,12 @@ void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
         char buf[256];
         snprintf(buf, 256, dgettext("echoicebox", "%d / %d"),
                  cur_page + 1, total_pages);
-        edje_object_part_text_set(footer, part, buf);
+        char buf2[266];
+        snprintf(buf2, 266, "%s %s %s",
+                 cur_page ? LEFT_ARROW : NO_ARROW,
+                 buf,
+                 cur_page < total_pages - 1 ? RIGHT_ARROW : NO_ARROW);
+        edje_object_part_text_set(footer, part, buf2);
     }
 }
 
