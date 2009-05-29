@@ -48,9 +48,9 @@ void choicebox_aux_key_down_handler(Evas_Object* o,
     if(!strcmp(k, "Down") || !strcmp(k, "Next"))
         choicebox_next(o);
     if(!strcmp(k, "Left"))
-        choicebox_prevpage(o);
+        choicebox_prev_pages(o, is_alt ? 10 : 1);
     if(!strcmp(k, "Right"))
-        choicebox_nextpage(o);
+        choicebox_next_pages(o, is_alt ? 10 : 1);
     if(!strncmp(k, "KP_", 3) && (isdigit(k[3])) && !k[4])
         _activate(o, k[3], is_alt);
     if(isdigit(k[0]) && !k[1])
