@@ -73,8 +73,13 @@ void choicebox_invalidate_interval(Evas_Object* e, int item_from, int item_to);
 
 void choicebox_prev(Evas_Object* e);
 void choicebox_next(Evas_Object* e);
-void choicebox_prevpage(Evas_Object* e);
-void choicebox_nextpage(Evas_Object* e);
+
+void choicebox_prev_pages(Evas_Object* e, int n);
+void choicebox_next_pages(Evas_Object* e, int n);
+
+/* Compatibility */
+#define choicebox_prevpage(e) (choicebox_prev_pages(e, 1))
+#define choicebox_nextpage(e) (choicebox_next_pages(e, 1))
 
 void choicebox_activate_nth_visible(Evas_Object* e, int nth, bool is_alt);
 void choicebox_activate_current(Evas_Object* e, bool is_alt);

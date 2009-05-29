@@ -516,35 +516,35 @@ void choicebox_next(Evas_Object* o)
     _choicebox_update(o, &new);
 }
 
-void choicebox_prevpage(Evas_Object* o)
+void choicebox_prev_pages(Evas_Object* o, int n)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
     if(!data->st.pagesize) return;
 
     choicebox_state_t new = data->st;
-    new.top_item = MAX(0, data->st.top_item - data->st.pagesize);
+    new.top_item = MAX(0, new.top_item - new.pagesize * n);
 
-    if(data->st.sel != -1)
-        new.sel = MAX(0, data->st.sel - data->st.pagesize);
+    if(new.sel != -1)
+        new.sel = MAX(0, new.sel - new.pagesize * n);
 
     _choicebox_update(o, &new);
 }
 
-void choicebox_nextpage(Evas_Object* o)
+void choicebox_next_pages(Evas_Object* o, int n)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
     if(!data->st.pagesize) return;
     if(!data->st.size) return;
 
-    /* Don't turn page if already on last page */
-    if(data->st.top_item + data->st.pagesize >= data->st.size)
+    /* Don't turn page if pointer would be beyond last page */
+    if(data->st.top_item + data->st.pagesize * n >= data->st.size)
         return;
 
     choicebox_state_t new = data->st;
-    new.top_item = MIN(new.size - 1, new.top_item + new.pagesize);
+    new.top_item = MIN(new.size - 1, new.top_item + new.pagesize * n);
 
     if(new.sel != -1)
-        new.sel = MIN(new.size - 1, new.sel + new.pagesize);
+        new.sel = MIN(new.size - 1, new.sel + new.pagesize * n);
 
     _choicebox_update(o, &new);
 }
