@@ -41,6 +41,7 @@ void choicebox_aux_key_down_handler(Evas_Object* o,
                                     Evas_Event_Key_Down* ev)
 {
     const char* k = ev->keyname;
+    bool is_alt = evas_key_modifier_is_set(ev->modifiers, "Alt");
 
     if(!strcmp(k, "Up") || !strcmp(k, "Prior"))
         choicebox_prev(o);
@@ -51,9 +52,9 @@ void choicebox_aux_key_down_handler(Evas_Object* o,
     if(!strcmp(k, "Right"))
         choicebox_nextpage(o);
     if(!strncmp(k, "KP_", 3) && (isdigit(k[3])) && !k[4])
-        _activate(o, k[3], false);
+        _activate(o, k[3], is_alt);
     if(isdigit(k[0]) && !k[1])
-        _activate(o, k[0], false);
+        _activate(o, k[0], is_alt);
     if(!strcmp(k, "Return") || !strcmp(k, "KP_Return"))
-        choicebox_activate_current(o, false);
+        choicebox_activate_current(o, is_alt);
 }
