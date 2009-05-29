@@ -1,3 +1,11 @@
+echoicebox (0.1-11) asimov; urgency=low
+
+  * Add choicebox_next_pages/choicebox_prev_pages functions
+  * Handle long-press (Alt) situation in echoicebox_aux_key_down_handler
+  * Add long-press left/right handling to choicebox_aux_key_down_handler
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 29 May 2009 07:18:01 +0700
+
 echoicebox (0.1-10) asimov; urgency=low
 
   * Added drawing arrows to the choicebox_aux_edje_footer_handler.
