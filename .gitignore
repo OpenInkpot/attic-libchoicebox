@@ -18,3 +18,5 @@ Makefile
 Makefile.in
 missing
 *.o
+*.mo
+
