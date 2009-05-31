@@ -11,3 +11,4 @@ install-data-hook: $(COMPILED_THEMES)
 		$(mkdir_p) $(DESTDIR)$(theme_dir); \
 		$(INSTALL_DATA) $$theme $(DESTDIR)$(theme_dir)/$$theme; \
 	done
+	$(INSTALL_DATA) echoicebox.edci $(DESTDIR)$(includedir)
