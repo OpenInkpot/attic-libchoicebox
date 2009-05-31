@@ -1,3 +1,9 @@
+echoicebox (0.1-12) asimov; urgency=low
+
+  * Added echoicebox.edci to create custom items.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 01 Jun 2009 02:30:51 +0700
+
 echoicebox (0.1-11) asimov; urgency=low
 
   * Add choicebox_next_pages/choicebox_prev_pages functions
