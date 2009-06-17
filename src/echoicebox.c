@@ -194,6 +194,10 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
         for(i = 0; i < new.pagesize - curitems; ++i)
         {
             Evas_Object* item = edje_object_add(evas);
+            char f[256];
+            snprintf(f, 256, "choicebox/%p/item/%d", o, i);
+            evas_object_name_set(item, f);
+
             evas_object_stack_above(item, data->clip);
             edje_object_file_set(item, data->theme_file, data->item_group);
             evas_object_show(item);
@@ -401,8 +405,12 @@ Evas_Object* choicebox_new(Evas* evas,
     data->clip = evas_object_rectangle_add(evas);
     if(!data->clip)
         goto err;
+
     evas_object_color_set(data->clip, 255, 255, 255, 255);
-    evas_object_name_set(data->clip, "choicebox/background");
+
+    char f[256];
+    snprintf(f, 256, "choicebox/%p/background", o);
+    evas_object_name_set(data->clip, f);
 
     Evas_Object* tmpitem = edje_object_add(evas);
     if(!edje_object_file_set(tmpitem, data->theme_file, data->item_group))
