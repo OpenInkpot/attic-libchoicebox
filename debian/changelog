@@ -1,3 +1,9 @@
+echoicebox (0.1-13) asimov; urgency=low
+
+  * Fixed missing background for overlapping choiceboxes.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 18 Jun 2009 05:09:09 +0700
+
 echoicebox (0.1-12) asimov; urgency=low
 
   * Added echoicebox.edci to create custom items.
