@@ -26,9 +26,9 @@
 #include <libintl.h>
 #include <string.h>
 
-#define LEFT_ARROW "⇦"
-#define RIGHT_ARROW "⇨"
-#define NO_ARROW " "
+#define LEFT_ARROW "«"
+#define RIGHT_ARROW "»"
+#define NO_ARROW " "
 
 void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
                                        int cur_page, int total_pages)
