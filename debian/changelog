@@ -1,3 +1,9 @@
+echoicebox (0.1-14) asimov; urgency=low
+
+  * Arrows characters changed to workaround some bug in E.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 29 Jun 2009 23:15:36 +0700
+
 echoicebox (0.1-13) asimov; urgency=low
 
   * Fixed missing background for overlapping choiceboxes.
