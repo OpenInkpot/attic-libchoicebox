@@ -32,8 +32,21 @@ images {
 
 styles {
     style {
+        name, "titles";
+        base, "font=sans-serif font_size=20 color=#000 align=left valign=top wrap=word";
+        tag, "inactive" "+color=#888";
+        tag, "/inactive" "-";
+    };
+    style {
         name, "values";
-        base, "font=serif font_size=24 color=#000 align=right valign=bottom";
+        base, "font=sans-serif font_size=20 color=#000 align=right valign=bottom";
+        tag, "inactive" "+color=#888";
+        tag, "/inactive" "-";
+    }
+
+    style {
+        name, "item-texts";
+        base, "font=sans-serif font_size=28 color=#000 align=left valign=middle";
         tag, "inactive" "+color=#888";
         tag, "/inactive" "-";
     }
@@ -43,18 +56,14 @@ collections {
    START_FULL_SIZE_ITEM_GROUP("full")
          part {
             name, "title";
-            type, TEXT;
+            type, TEXTBLOCK;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.0;
-                  text, "";
-                  font, "serif";
-                  size, 24;
-                  text_class, "chrome";
+                  style, "titles";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -69,7 +78,6 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
-                  text, "";
                }
                rel1 { relative, 0.0 0.0; offset, 17 35; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -77,18 +85,14 @@ collections {
          }
          part {
             name, "text";
-            type, TEXT;
+            type, TEXTBLOCK;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.4;
-                  text, "";
-                  font, "serif";
-                  size, "28";
-                  text_class, "chrome";
+                  style, "item-texts";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -284,18 +288,15 @@ collections {
 
          part {
             name, "title";
-            type, TEXT;
+            type, TEXTBLOCK;
+            multiline, 1;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.0;
-                  text, "";
-                  font, "serif";
-                  size, 24;
-                  text_class, "chrome";
+                  style, "titles";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
                rel2 { relative, 1.0 1.0; offset, -4 -1; }
@@ -310,7 +311,6 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
-                  text, "";
                }
                rel1 { relative, 0.0 0.0; offset, 17 35; }
                rel2 { relative, 1.0 1.0; offset, -4 -1; }
@@ -318,18 +318,15 @@ collections {
          }
          part {
             name, "text";
-            type, TEXT;
+            type, TEXTBLOCK;
+            multiline, 1;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.4;
-                  text, "";
-                  font, "serif";
-                  size, "28";
-                  text_class, "chrome";
+                  style, "titles";
                }
                rel1 { relative, 0.0 0.0; offset, 17 0; }
                rel2 { relative, 1.0 1.0; offset, -4 -1; }
@@ -571,18 +568,16 @@ collections {
 
          part {
             name, "title";
-            type, TEXT;
+            type, TEXTBLOCK;
+            multiline, 1;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.0;
-                  text, "";
-                  font, "serif";
-                  size, 24;
-                  text_class, "chrome";
+                  style, "titles";
+
                }
                rel1 { relative, 0.0 0.0; offset, 3 0; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
@@ -605,18 +600,15 @@ collections {
          }
          part {
             name, "text";
-            type, TEXT;
+            type, TEXTBLOCK;
+            multiline, 1;
             mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                color, 0 0 0 255;
                text {
-                  align, 0.0 0.4;
-                  text, "";
-                  font, "serif";
-                  size, "28";
-                  text_class, "chrome";
+                  style, "titles";
                }
                rel1 { relative, 0.0 0.0; offset, 3 0; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
