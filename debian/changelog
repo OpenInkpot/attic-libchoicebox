@@ -1,3 +1,9 @@
+echoicebox (0.1-15) asimov; urgency=low
+
+  * Update theme: use sans-serif, smaller fonts and multiline TEXTBLOCKs.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 02 Jul 2009 06:11:50 +0700
+
 echoicebox (0.1-14) asimov; urgency=low
 
   * Arrows characters changed to workaround some bug in E.
