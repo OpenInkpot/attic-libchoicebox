@@ -78,8 +78,10 @@ collections {
                state, "default" 0.0;
                text {
                   style, "values";
+                  min, 0 1;
                }
-               rel1 { relative, 0.0 0.0; offset, 17 35; }
+               align, 1.0 1.0;
+               rel1 { relative, 0.0 1.0; offset, 17 -1; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
             }
          }
@@ -93,7 +95,9 @@ collections {
                color, 0 0 0 255;
                text {
                   style, "item-texts";
+                  max, 0 1;
                }
+               align, 0 0.5;
                rel1 { relative, 0.0 0.0; offset, 17 0; }
                rel2 { relative, 1.0 1.0; offset, -18 -1; }
             }
