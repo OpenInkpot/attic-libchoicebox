@@ -1,3 +1,9 @@
+echoicebox (0.1-16) asimov; urgency=low
+
+  * Fixed layout of 'text' item of theme.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 02 Jul 2009 08:32:51 +0700
+
 echoicebox (0.1-15) asimov; urgency=low
 
   * Update theme: use sans-serif, smaller fonts and multiline TEXTBLOCKs.
