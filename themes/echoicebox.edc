@@ -33,7 +33,7 @@ images {
 styles {
     style {
         name, "titles";
-        base, "font=sans-serif font_size=20 color=#000 align=left valign=top wrap=word";
+        base, "font=sans-serif font_size=24 color=#000 align=left valign=top wrap=word";
         tag, "inactive" "+color=#888";
         tag, "/inactive" "-";
     };
@@ -52,56 +52,84 @@ styles {
     }
 }
 
+#define DEF_ITEM_BLOCK(LEFT_MARGIN, RIGHT_MARGIN)                       \
+    part {                                                              \
+        name, "title";                                                  \
+        type, TEXTBLOCK;                                                \
+        multiline, 1;                                                   \
+        mouse_events, 0;                                                \
+        clip_to, "clipper";                                             \
+        description {                                                   \
+            state, "default" 0.0;                                       \
+            color, 0 0 0 255;                                           \
+            text {                                                      \
+                style, "titles";                                        \
+                min, 0 1;                                               \
+            }                                                           \
+            align, 0.0 0.0;                                             \
+            rel1 { relative, 0.0 0.0; offset, LEFT_MARGIN 0; }          \
+            rel2 { relative, 1.0 0.0; offset, RIGHT_MARGIN 0; }         \
+        }                                                               \
+    }                                                                   \
+    part {                                                              \
+        name, "value";                                                  \
+        type, TEXTBLOCK;                                                \
+        multiline, 1;                                                   \
+        mouse_events, 0;                                                \
+        clip_to, "clipper";                                             \
+        description {                                                   \
+            state, "default" 0.0;                                       \
+            text {                                                      \
+                style, "values";                                        \
+                min, 0 1;                                               \
+            }                                                           \
+            align, 1.0 1.0;                                             \
+            rel1 { relative, 0.0 1.0; offset, LEFT_MARGIN -1; }         \
+            rel2 { relative, 1.0 1.0; offset, RIGHT_MARGIN -1; }        \
+        }                                                               \
+    }
+
+#define BIG_TEXT_PART(LEFT_MARGIN,RIGHT_MARGIN)                         \
+    part {                                                              \
+        name, "text";                                                   \
+        type, TEXTBLOCK;                                                \
+        mouse_events, 0;                                                \
+        clip_to, "clipper";                                             \
+        description {                                                   \
+            state, "default" 0.0;                                       \
+            color, 0 0 0 255;                                           \
+            text {                                                      \
+                style, "item-texts";                                    \
+                max, 0 1;                                               \
+            }                                                           \
+            align, 0 0.5;                                               \
+            rel1 { relative, 0.0 0.0; offset, LEFT_MARGIN 0; }          \
+            rel2 { relative, 1.0 1.0; offset, RIGHT_MARGIN -1; }        \
+        }                                                               \
+    }
+
+#define SETTINGS_TEXT_PART(LEFT_MARGIN, RIGHT_MARGIN)                   \
+    part {                                                              \
+        name, "text";                                                   \
+        type, TEXTBLOCK;                                                \
+        multiline, 1;                                                   \
+        mouse_events, 0;                                                \
+        clip_to, "clipper";                                             \
+        description {                                                   \
+            state, "default" 0.0;                                       \
+            color, 0 0 0 255;                                           \
+            text {                                                      \
+                style, "titles";                                        \
+            }                                                           \
+            rel1 { relative, 0.0 0.0; offset, LEFT_MARGIN 0; }          \
+            rel2 { relative, 1.0 1.0; offset, RIGHT_MARGIN -1; }        \
+        }                                                               \
+    }
+
 collections {
    START_FULL_SIZE_ITEM_GROUP("full")
-         part {
-            name, "title";
-            type, TEXTBLOCK;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "titles";
-               }
-               rel1 { relative, 0.0 0.0; offset, 17 0; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
-         part {
-            name, "value";
-            type, TEXTBLOCK;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               text {
-                  style, "values";
-                  min, 0 1;
-               }
-               align, 1.0 1.0;
-               rel1 { relative, 0.0 1.0; offset, 17 -1; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
-         part {
-            name, "text";
-            type, TEXTBLOCK;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "item-texts";
-                  max, 0 1;
-               }
-               align, 0 0.5;
-               rel1 { relative, 0.0 0.0; offset, 17 0; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
+       DEF_ITEM_BLOCK(17, -18)
+       BIG_TEXT_PART(17, -18)
    END_FULL_SIZE_ITEM_GROUP
 
    group {
@@ -289,53 +317,8 @@ collections {
                rel2 { relative, 1.0 1.0; offset, -1 -1; }
             }
          }
-
-         part {
-            name, "title";
-            type, TEXTBLOCK;
-            multiline, 1;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "titles";
-               }
-               rel1 { relative, 0.0 0.0; offset, 17 0; }
-               rel2 { relative, 1.0 1.0; offset, -4 -1; }
-            }
-         }
-         part {
-            name, "value";
-            type, TEXTBLOCK;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               text {
-                  style, "values";
-               }
-               rel1 { relative, 0.0 0.0; offset, 17 35; }
-               rel2 { relative, 1.0 1.0; offset, -4 -1; }
-            }
-         }
-         part {
-            name, "text";
-            type, TEXTBLOCK;
-            multiline, 1;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "titles";
-               }
-               rel1 { relative, 0.0 0.0; offset, 17 0; }
-               rel2 { relative, 1.0 1.0; offset, -4 -1; }
-            }
-         }
+         DEF_ITEM_BLOCK(17, -4)
+         SETTINGS_TEXT_PART(17, -4)
       }
       data {
          /* HACK: until edje fetches size_hints */
@@ -345,15 +328,6 @@ collections {
          program {
             name, "set_even";
             signal, "set_even";
-            script {
-               set_state(PART:"clipper", "enabled", 0.0);
-               set_state(PART:"background-img", "default", 0.0);
-               set_state(PART:"left-side", "default", 0.0);
-            }
-         }
-         program {
-            name, "set_odd";
-            signal, "set_odd";
             script {
                set_state(PART:"clipper", "enabled", 0.0);
                set_state(PART:"background-img", "alternate", 0.0);
@@ -361,285 +335,12 @@ collections {
             }
          }
          program {
-            name, "empty";
-            signal, "empty";
-            script {
-               set_state(PART:"clipper", "default", 0.0);
-            }
-         }
-         program {
-            name, "select";
-            signal, "select";
-            script {
-               set_state(PART:"sel-clipper", "enabled", 0.0);
-            }
-         }
-         program {
-            name, "deselect";
-            signal, "deselect";
-            script {
-               set_state(PART:"sel-clipper", "default", 0.0);
-            }
-         }
-      }
-   }
-   group {
-      name, "settings-right";
-      parts {
-         part {
-            name, "background";
-            type, RECT;
-            description {
-               state, "default" 0.0;
-               color, 255 255 255 255;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-            }
-         }
-         part {
-            name, "clipper";
-            type, RECT;
-            description {
-               state, "default" 0.0;
-               color, 255 255 255 0;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-            }
-            description {
-               state, "enabled" 0.0;
-               inherit, "default" 0.0;
-               color, 255 255 255 255;
-            }
-         }
-         part {
-            name, "left-side";
-            type, RECT;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 238 238 238 255;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 0.0 1.0; offset, 0 -1; }
-            }
-         }
-         part {
-            name, "right-side";
-            type, IMAGE;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 1.0 0.0; offset, -15 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-               image {
-                  normal, "grid1-side-right.png";
-               }
-               fill {
-                  size {
-                     relative, 0.0 0.0;
-                     offset, 15 2;
-                  }
-               }
-            }
-            description {
-               state, "alternate" 0.0;
-               inherit, "default" 0.0;
-               image {
-                  normal, "grid2-side-right.png";
-               }
-            }
-         }
-         part {
-            name, "background-img";
-            type, IMAGE;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 0.0 0.0; offset, 1 0; }
-               rel2 { relative, 1.0 1.0; offset, -15 -1; }
-               image {
-                  normal, "grid1-body.png";
-               }
-               fill {
-                  size {
-                     relative, 0.0 0.0;
-                     offset, 1 2;
-                  }
-               }
-            }
-            description {
-               state, "alternate" 0.0;
-               inherit, "default" 0.0;
-               image {
-                  normal, "grid2-body.png";
-               }
-            }
-         }
-         part {
-            name, "sel-clipper";
-            type, RECT;
-            description {
-               state, "default" 0.0;
-               color, 255 255 255 0;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-            }
-            description {
-               state, "enabled" 0.0;
-               inherit, "default" 0.0;
-               color, 255 255 255 255;
-            }
-         }
-         part {
-            name, "sel-background-img";
-            type, RECT;
-            mouse_events, 0;
-            clip_to, "sel-clipper";
-            description {
-               state, "default" 0.0;
-               color, 255 255 255 255;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-            }
-         }
-         part {
-            name, "sel-left-side";
-            type, IMAGE;
-            mouse_events, 0;
-            clip_to, "sel-clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 0.0 1.0; offset, 0 -1; }
-               image {
-                  normal, "sel-side.png";
-               }
-               fill {
-                  size {
-                     relative, 0.0 0.0;
-                     offset, 1 4;
-                  }
-               }
-            }
-         }
-         part {
-            name, "sel-right-side";
-            type, IMAGE;
-            mouse_events, 0;
-            clip_to, "sel-clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 1.0 0.0; offset, -15 0; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-               image {
-                  normal, "sel-side.png";
-               }
-               fill {
-                  size {
-                     relative, 0.0 0.0;
-                     offset, 15 4;
-                  }
-               }
-            }
-         }
-         part {
-            name, "sel-top";
-            type, RECT;
-            mouse_events, 0;
-            clip_to, "sel-clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               rel1 { relative, 0.0 0.0; offset, 0 0; }
-               rel2 { relative, 1.0 0.0; offset, -1 1; }
-            }
-         }
-         part {
-            name, "sel-bottom";
-            type, RECT;
-            mouse_events, 0;
-            clip_to, "sel-clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               rel1 { relative, 0.0 1.0; offset, 0 -2; }
-               rel2 { relative, 1.0 1.0; offset, -1 -1; }
-            }
-         }
-
-
-         part {
-            name, "title";
-            type, TEXTBLOCK;
-            multiline, 1;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "titles";
-
-               }
-               rel1 { relative, 0.0 0.0; offset, 3 0; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
-         part {
-            name, "value";
-            type, TEXTBLOCK;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               text {
-                  style, "values";
-                  text, "";
-               }
-               rel1 { relative, 0.0 0.0; offset, 3 35; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
-         part {
-            name, "text";
-            type, TEXTBLOCK;
-            multiline, 1;
-            mouse_events, 0;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               color, 0 0 0 255;
-               text {
-                  style, "titles";
-               }
-               rel1 { relative, 0.0 0.0; offset, 3 0; }
-               rel2 { relative, 1.0 1.0; offset, -18 -1; }
-            }
-         }
-      }
-      data {
-         /* HACK: until edje fetches size_hints */
-         item, "min_height" 78;
-      }
-      programs {
-         program {
-            name, "set_even";
-            signal, "set_even";
-            script {
-               set_state(PART:"clipper", "enabled", 0.0);
-               set_state(PART:"background-img", "default", 0.0);
-               set_state(PART:"right-side", "default", 0.0);
-            }
-         }
-         program {
             name, "set_odd";
             signal, "set_odd";
             script {
                set_state(PART:"clipper", "enabled", 0.0);
-               set_state(PART:"background-img", "alternate", 0.0);
-               set_state(PART:"right-side", "alternate", 0.0);
+               set_state(PART:"background-img", "default", 0.0);
+               set_state(PART:"left-side", "default", 0.0);
             }
          }
          program {
@@ -665,4 +366,14 @@ collections {
          }
       }
    }
+
+   START_RIGHT_ITEM_GROUP("settings-right")
+       DEF_ITEM_BLOCK(3, -18)
+       SETTINGS_TEXT_PART(3, -18)
+   END_RIGHT_ITEM_GROUP("default", "alternate")
+
+   START_RIGHT_ITEM_GROUP("settings-right-alt")
+       DEF_ITEM_BLOCK(3, -18)
+       SETTINGS_TEXT_PART(3, -18)
+   END_RIGHT_ITEM_GROUP("alternate", "default")
 }
