@@ -1,3 +1,10 @@
+echoicebox (0.1-17) asimov; urgency=low
+
+  * Refactor theme, enlarge text for settings a bit.
+  * Add settings-right-alt style, with different odd-even coloring pattern.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 07 Jul 2009 06:32:31 +0700
+
 echoicebox (0.1-16) asimov; urgency=low
 
   * Fixed layout of 'text' item of theme.
