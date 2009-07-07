@@ -175,7 +175,7 @@ collections {
                fill {
                   size {
                      relative, 0.0 0.0;
-                     offset, 15 2;
+                     offset, 15 78;
                   }
                }
             }
@@ -214,7 +214,7 @@ collections {
                fill {
                   size {
                      relative, 0.0 0.0;
-                     offset, 1 2;
+                     offset, 600 78;
                   }
                }
             }
@@ -268,7 +268,7 @@ collections {
                fill {
                   size {
                      relative, 0.0 0.0;
-                     offset, 15 4;
+                     offset, 15 78;
                   }
                }
             }
@@ -288,7 +288,7 @@ collections {
                fill {
                   size {
                      relative, 0.0 0.0;
-                     offset, 1 4;
+                     offset, 15 78;
                   }
                }
             }
