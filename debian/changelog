@@ -1,3 +1,9 @@
+echoicebox (0.1-18) asimov; urgency=low
+
+  * Optimize (de-tile) theme. Huge performance improvement.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 07 Jul 2009 18:04:01 +0700
+
 echoicebox (0.1-17) asimov; urgency=low
 
   * Refactor theme, enlarge text for settings a bit.
