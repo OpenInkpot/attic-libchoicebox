@@ -1,3 +1,10 @@
+echoicebox (0.1-19) asimov; urgency=low
+
+  * Fix improper stack order of echoicebox children objects.
+  * Fix wrong texture on selection bar.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 12 Jul 2009 04:12:30 +0700
+
 echoicebox (0.1-18) asimov; urgency=low
 
   * Optimize (de-tile) theme. Huge performance improvement.
