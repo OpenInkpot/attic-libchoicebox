@@ -131,7 +131,7 @@ static void _run_page_handler(Evas_Object* o)
     choicebox_t* data = evas_object_smart_data_get(o);
 
    int page = data->st.pagesize ? DIV_CEIL(data->st.top_item, data->st.pagesize) : 0;
-   int pages = data->st.pagesize ? DIV_CEIL(data->st.size, data->st.pagesize) : 0;
+   int pages = MAX(page + 1, data->st.pagesize ? DIV_CEIL(data->st.size, data->st.pagesize) : 0);
 
    (*data->page_handler)(o, page, pages, data->param);
 }
