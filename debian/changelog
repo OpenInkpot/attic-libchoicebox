@@ -1,3 +1,10 @@
+echoicebox (0.1-20) asimov; urgency=low
+
+  * Fix missing 2/2 footer (or invalid N+1/N footer) if top item is not on
+    page boundary.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 23 Jul 2009 05:34:00 +0700
+
 echoicebox (0.1-19) asimov; urgency=low
 
   * Fix improper stack order of echoicebox children objects.
