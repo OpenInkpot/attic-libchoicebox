@@ -1,3 +1,9 @@
+echoicebox (0.1-21) asimov; urgency=low
+
+  * Add Belarussian translation
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 23 Jul 2009 22:05:00 +0700
+
 echoicebox (0.1-20) asimov; urgency=low
 
   * Fix missing 2/2 footer (or invalid N+1/N footer) if top item is not on
