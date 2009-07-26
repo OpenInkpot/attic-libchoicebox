@@ -4,5 +4,5 @@ include_HEADERS = echoicebox.h
 
 AM_CFLAGS = -Wall
 
-INCLUDES = @EVAS_CFLAGS@ @ECORE_CFLAGS@ @ECORE_EVAS_CFLAGS@ @EDJE_CFLAGS@
-libechoicebox_la_LDFLAGS = @EVAS_LIBS@ @ECORE_LIBS@ @ECORE_EVAS_LIBS@ @EDJE_LIBS@ -no-undefined -version-info 2:0:2 --as-needed
+INCLUDES = @EFL_CFLAGS@
+libechoicebox_la_LDFLAGS = @EFL_LIBS@ -no-undefined -version-info 2:0:2 --as-needed

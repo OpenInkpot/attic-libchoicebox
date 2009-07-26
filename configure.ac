@@ -5,10 +5,6 @@ AM_INIT_AUTOMAKE(foreign)
 AC_PROG_CC
 AM_PROG_LIBTOOL
 
-PKG_CHECK_MODULES(ECORE,[ecore])
-PKG_CHECK_MODULES(ECORE_FILE,[ecore-file])
-PKG_CHECK_MODULES(ECORE_EVAS,[ecore-evas])
-PKG_CHECK_MODULES(EVAS,[evas])
-PKG_CHECK_MODULES(EDJE,[edje])
+PKG_CHECK_MODULES(EFL,[ecore ecore-file ecore-evas evas edje])
 
 AC_OUTPUT([Makefile src/Makefile themes/Makefile po/Makefile echoicebox.pc])
