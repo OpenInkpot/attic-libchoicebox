@@ -151,7 +151,9 @@ static void _choicebox_update(Evas_Object* o, const choicebox_state_t* new)
         _choicebox_update_item(o, i, &old_i, &new_i);
     }
 
-    if(old.top_item != new->top_item || old.pagesize != new->pagesize)
+    if(old.size != new->size
+       || old.top_item != new->top_item
+       || old.pagesize != new->pagesize)
        _run_page_handler(o);
 }
 
