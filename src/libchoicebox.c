@@ -446,7 +446,7 @@ Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param)
     if(!info->background)
     {
         background = evas_object_rectangle_add(evas);
-        evas_object_color_set(background, 0, 0, 255, 255);
+        evas_object_color_set(background, 255, 255, 255, 255);
     }
     else
         background = info->background;
