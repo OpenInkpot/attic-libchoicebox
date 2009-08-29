@@ -1,8 +1,12 @@
-lib_LTLIBRARIES = libechoicebox.la
-libechoicebox_la_SOURCES = echoicebox.c echoicebox_aux.c
-include_HEADERS = echoicebox.h
+lib_LTLIBRARIES = libchoicebox.la
+libchoicebox_la_SOURCES = libchoicebox.c libchoicebox-aux.c
+include_HEADERS = libchoicebox.h
 
-AM_CFLAGS = -Wall
+AM_CFLAGS=--std=c99 -Wall
 
-INCLUDES = @EFL_CFLAGS@
-libechoicebox_la_LDFLAGS = @EFL_LIBS@ -no-undefined -version-info 2:0:2 --as-needed
+INCLUDES = $(EFL_CFLAGS) $(LIBKEYS_CFLAGS)
+libchoicebox_la_LDFLAGS = $(EFL_LIBS) $(LIBKEYS_LIBS) -Wl,--no-undefined -version-info 1:0:0
+
+noinst_PROGRAMS = teste
+teste_SOURCES = teste.c
+teste_LDFLAGS = libchoicebox.la

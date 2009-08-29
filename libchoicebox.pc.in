@@ -3,8 +3,8 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: echoicebox
+Name: libchoicebox
 Description: Evas virtual listbox smart object
 Version: @PACKAGE_VERSION@
 Cflags: -I${includedir}
-Libs: -L${libdir} -lechoicebox
+Libs: -L${libdir} -lchoicebox

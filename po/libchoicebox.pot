@@ -1,10 +1,10 @@
-# echoicebox - virtual listbox smart object for evas
+# choicebox - virtual listbox smart object for evas
 # This file is put in the public domain.
 # Mikhail Gusarov <dottedmag@dottedmag.net>, 2009
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: echoicebox 0.1\n"
+"Project-Id-Version: choicebox 0.1\n"
 "Report-Msgid-Bugs-To: dottedmag@dottedmag.net\n"
 "POT-Creation-Date: 2009-06-25 17:17+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ..\n"
 
-#: src/echoicebox_aux.c:41
+#: src/libchoicebox-aux.c:41
 #, c-format
 msgid "%d / %d"
 msgstr ""

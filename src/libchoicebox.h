@@ -1,5 +1,5 @@
 /*
- * echoicebox -- virtual listbox smart object for evas
+ * choicebox -- virtual listbox smart object for evas
  *
  * © 2009 Mikhail Gusarov <dottedmag@dottedmag.net>
  *
@@ -18,8 +18,8 @@
  * Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef ECHOICEBOX_H
-#define ECHOICEBOX_H
+#ifndef LIBCHOICEBOX_H
+#define LIBCHOICEBOX_H
 
 #include <stdbool.h>
 #include <Evas.h>
@@ -40,6 +40,9 @@ typedef void (*choicebox_page_updated_t)(Evas_Object* choicebox,
                                          int total_pages,
                                          void* param);
 
+typedef void (*choicebox_close_handler_t)(Evas_Object* choicebox,
+                                          void* param);
+
 /*
  * Choicebox uses groups $item_group from theme file.
  *
@@ -56,13 +59,26 @@ typedef void (*choicebox_page_updated_t)(Evas_Object* choicebox,
  * Choicebox does not manipulate content of the items, providing callbacks for
  * this.
  */
-Evas_Object* choicebox_new(Evas* evas,
-                           const char* theme_file, /* It sucks, do you know better way? */
-                           const char* item_group,
-                           choicebox_handler_t handler,
-                           choicebox_draw_handler_t draw_handler,
-                           choicebox_page_updated_t page_handler,
-                           void* param);
+
+typedef struct
+{
+    Evas_Object* background;
+    const char* frame_theme_file;
+    const char* frame_theme_group;
+    const char* item_theme_file;
+    const char* item_theme_group;
+    choicebox_handler_t handler;
+    choicebox_draw_handler_t draw_handler;
+    choicebox_page_updated_t page_handler;
+    choicebox_close_handler_t close_handler; /* Can be NULL */
+} choicebox_info_t;
+
+Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param);
+
+/*
+ * Enables/disables key hinting
+ */
+void choicebox_set_hinted(Evas_Object* e, bool is_hinted);
 
 void choicebox_set_size(Evas_Object* e, int size);
 void choicebox_invalidate_item(Evas_Object* e, int item_num);
@@ -91,6 +107,11 @@ void choicebox_set_selection(Evas_Object* e, int item_num);
 int choicebox_get_selection(Evas_Object* e);
 
 /*
+ * Just calls the close handler if any.
+ */
+void choicebox_request_close(Evas_Object* e);
+
+/*
  * Auxiliary utility functions
  */
 
@@ -112,26 +133,35 @@ void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
                                       int cur_page, int total_pages);
 
 /*
- * Sample implementation of Key_Down handler:
+ * Sample implementation of Key_Up handler.
+ *
+ * Default keybindings:
  * - 1,2..,9,0 activate 0..10th item
  * - Up/Down moves cursor up/down
  * - Left/Right/Prior/Next switches page
  * - Enter activates current item
+ * - Escape requests the closing
  *
- * Note that Escape is not handled!
+ * Returns whether the event was handled
  *
  * Usage:
  *
- * void key_down_handler(void* param, Evas* e, Evas_Object* o, void* event_info)
+ * void key_up_handler(void* param, Evas* e, Evas_Object* o, void* event_info)
  * {
- *     Evas_Event_Key_down* ev = (Evas_Event_Key_Down*)event_info;
+ *     Evas_Event_Key_Up* ev = (Evas_Event_Key_Up*)event_info;
  *     / * custom processing as needed * /
  *
- *     choicebox_aux_key_down_handler(o, ev);
+ *     choicebox_aux_key_up_handler(o, ev);
  * }
  */
 
-void choicebox_aux_key_down_handler(Evas_Object* choicebox,
-                                    Evas_Event_Key_Down* ev);
+bool choicebox_aux_key_up_handler(Evas_Object* choicebox,
+                                    Evas_Event_Key_Up* ev);
+
+/*
+ * Subscribes choicebox to Key_Up event with default keybindings (see
+ * choicebox_aux_key_up_handler).
+ */
+void choicebox_aux_subscribe_key_up(Evas_Object* choicebox);
 
 #endif

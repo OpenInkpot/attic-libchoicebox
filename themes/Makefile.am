@@ -1,7 +1,7 @@
 THEMES=$(wildcard *.edc)
 COMPILED_THEMES=$(patsubst %.edc,%.edj,$(THEMES))
 
-theme_dir=$(datadir)/echoicebox
+theme_dir=$(datadir)/choicebox
 
 #%.edj: %.edc
 #	edje_cc $< $@
@@ -11,4 +11,3 @@ install-data-hook: $(COMPILED_THEMES)
 		$(mkdir_p) $(DESTDIR)$(theme_dir); \
 		$(INSTALL_DATA) $$theme $(DESTDIR)$(theme_dir)/$$theme; \
 	done
-	$(INSTALL_DATA) echoicebox.edci $(DESTDIR)$(includedir)

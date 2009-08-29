@@ -44,18 +44,7 @@ install: build
 
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
-binary-indep: install
-	dh_testdir
-	dh_testroot
-
-	dh_install -i --sourcedir=debian/tmp
-	dh_link -i
-	dh_compress -i
-	dh_fixperms -i
-	dh_installdeb -i
-	dh_gencontrol -i
-	dh_md5sums -i
-	dh_builddeb -i
+binary-indep:
 
 binary-arch: install
 	dh_testdir
@@ -63,7 +52,7 @@ binary-arch: install
 
 	dh_install -s --sourcedir=debian/tmp
 	dh_link -s
-	dh_strip -s
+	dh_strip -s --dbg-package=libchoicebox1-dbg
 	dh_compress -s
 	dh_fixperms -s
 	dh_makeshlibs -s

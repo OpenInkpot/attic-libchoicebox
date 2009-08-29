@@ -1,2 +1,2 @@
-./src/echoicebox.c
-./src/echoicebox_aux.c
+./src/libchoicebox.c
+./src/libchoicebox-aux.c

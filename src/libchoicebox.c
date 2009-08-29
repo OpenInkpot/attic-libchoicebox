@@ -27,7 +27,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <Edje.h>
-#include "echoicebox.h"
+#include <libchoicebox.h>
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
@@ -39,6 +39,7 @@ typedef struct
     int sel;
     int top_item;
     int pagesize;
+    bool need_hints;
 } choicebox_state_t;
 
 typedef struct
@@ -54,16 +55,20 @@ typedef struct
     choicebox_handler_t handler;
     choicebox_draw_handler_t draw_handler;
     choicebox_page_updated_t page_handler;
+    choicebox_close_handler_t close_handler;
     void* param;
 
     /* Theme info */
-    char* theme_file;
-    char* item_group;
+    char* frame_theme_file;
+    char* frame_theme_group;
     int item_minh;
 
+    char* item_theme_file;
+    char* item_theme_group;
+
     /* Widgets */
-    Evas_Object* clip;
-    Eina_Array* items;
+    Evas_Object* background;
+    Eina_Array* frames;
 
 } choicebox_t;
 
@@ -71,6 +76,7 @@ typedef struct
 {
     bool is_used;
     bool is_selected;
+    bool need_hints;
     int num;
 } _choicebox_item_info_t;
 
@@ -91,6 +97,7 @@ static _choicebox_item_info_t _choicebox_calc_item_info(
         item_info.is_selected = true;
     if(item_info.num < state->size)
         item_info.is_used = true;
+    item_info.need_hints = state->need_hints;
 
     return item_info;
 }
@@ -100,30 +107,34 @@ static void _choicebox_update_item(Evas_Object* o, int nth,
                                    const _choicebox_item_info_t* new)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    Evas_Object* item = eina_array_data_get(data->items, nth);
+    Evas_Object* frame = eina_array_data_get(data->frames, nth);
 
     if(old->is_selected && !new->is_selected)
-        edje_object_signal_emit(item, "deselect", "");
+        edje_object_signal_emit(frame, "deselect", "");
     if(!old->is_selected && new->is_selected)
-        edje_object_signal_emit(item, "select", "");
+        edje_object_signal_emit(frame, "select", "");
 
     if(!new->is_used)
     {
         if(old->is_used)
-            edje_object_signal_emit(item, "empty", "");
+            edje_object_signal_emit(frame, "empty", "");
         return;
     }
 
-    if(!old->is_used)
+    if(!old->is_used || (old->need_hints != new->need_hints))
     {
-        if(nth%2)
-            edje_object_signal_emit(item, "set_odd", "");
-        else
-            edje_object_signal_emit(item, "set_even", "");
+        char buf[512];
+        snprintf(buf, 512, "set_number,%d,%s",
+                 nth,
+                 new->need_hints ? "hinted" : "non-hinted");
+        edje_object_signal_emit(frame, buf, "");
     }
 
     if(!old->is_used || old->num != new->num)
+    {
+        Evas_Object* item = edje_object_part_swallow_get(frame, "contents");
         (*data->draw_handler)(o, item, new->num, nth, data->param);
+    }
 }
 
 static void _run_page_handler(Evas_Object* o)
@@ -170,16 +181,25 @@ static void _choicebox_activate(Evas_Object* o, int item_num, bool is_alt)
         (*data->handler)(o, item_num, is_alt, data->param);
 }
 
+static void _frame_del(Evas_Object* frame)
+{
+    Evas_Object* item = edje_object_part_swallow_get(frame, "contents");
+    evas_object_smart_member_del(frame);
+    evas_object_smart_member_del(item);
+    evas_object_del(frame);
+    evas_object_del(item);
+}
+
 static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
 
     choicebox_state_t new = data->st;
 
-    /** Update clip **/
+    /** Update background **/
 
-    evas_object_move(data->clip, ox, oy);
-    evas_object_resize(data->clip, ow, oh);
+    evas_object_move(data->background, ox, oy);
+    evas_object_resize(data->background, ow, oh);
 
     /** Update items **/
 
@@ -187,7 +207,7 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
     new.pagesize = oh / data->item_minh;
 
     /* Fix the widgets amount */
-    int curitems = eina_array_count_get(data->items);
+    int curitems = eina_array_count_get(data->frames);
     if(new.pagesize > curitems)
     {
         Evas* evas = evas_object_evas_get(o);
@@ -195,28 +215,41 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
         int i;
         for(i = 0; i < new.pagesize - curitems; ++i)
         {
+            Evas_Object* frame = edje_object_add(evas);
+            evas_object_smart_member_add(frame, o);
+            char f[256];
+            snprintf(f, 256, "choicebox/%p/frame/%d", o, i);
+            evas_object_name_set(frame, f);
+
+            //evas_object_stack_above(frame, data->background);
+            if(!edje_object_file_set(frame, data->frame_theme_file, data->frame_theme_group))
+                exit(17);
+
+            evas_object_show(frame);
+            //evas_object_clip_set(frame, data->background);
+
             Evas_Object* item = edje_object_add(evas);
             evas_object_smart_member_add(item, o);
-            char f[256];
             snprintf(f, 256, "choicebox/%p/item/%d", o, i);
             evas_object_name_set(item, f);
 
-            evas_object_stack_above(item, data->clip);
-            edje_object_file_set(item, data->theme_file, data->item_group);
+            //evas_object_stack_above(item, frame);
+            if(!edje_object_file_set(item, data->item_theme_file, data->item_theme_group))
+                exit(18);
+
             evas_object_show(item);
-            evas_object_clip_set(item, data->clip);
-            eina_array_push(data->items, item);
+            //evas_object_clip_set(item, frame);
+
+            edje_object_part_swallow(frame, "contents", item);
+
+            eina_array_push(data->frames, frame);
         }
     }
     if(new.pagesize < curitems)
     {
         int i;
         for(i = 0; i < curitems - new.pagesize; ++i)
-        {
-            Evas_Object* item = eina_array_pop(data->items);
-            evas_object_smart_member_del(item);
-            evas_object_del(item);
-        }
+            _frame_del(eina_array_pop(data->frames));
     }
 
     /* Ajust selection if necessary */
@@ -236,9 +269,9 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
         int item_w = ow;
         for(i = 0; i < new.pagesize; ++i)
         {
-            Evas_Object* item = eina_array_data_get(data->items, i);
-            evas_object_move(item, item_x, item_y);
-            evas_object_resize(item, item_w, item_h);
+            Evas_Object* frame = eina_array_data_get(data->frames, i);
+            evas_object_move(frame, item_x, item_y);
+            evas_object_resize(frame, item_w, item_h);
 
             item_y += item_h;
             if(i == new.pagesize - gap - 1) /* gaps */
@@ -255,7 +288,7 @@ static void _choicebox_add(Evas_Object* o)
     if(!data)
         return;
 
-    if(!(data->items = eina_array_new(10)))
+    if(!(data->frames = eina_array_new(10)))
     {
         free(data);
         return;
@@ -269,18 +302,20 @@ static void _choicebox_del(Evas_Object* o)
     choicebox_t* data = evas_object_smart_data_get(o);
     if(data)
     {
-        if(data->items)
+        if(data->frames)
         {
-            int size = eina_array_count_get(data->items);
+            int size = eina_array_count_get(data->frames);
             while(size--)
-                evas_object_del(eina_array_pop(data->items));
-            eina_array_free(data->items);
+                _frame_del(eina_array_pop(data->frames));
+            eina_array_free(data->frames);
         }
 
-        evas_object_del(data->clip);
+        evas_object_del(data->background);
 
-        free(data->theme_file);
-        free(data->item_group);
+        free(data->frame_theme_file);
+        free(data->frame_theme_group);
+        free(data->item_theme_file);
+        free(data->item_theme_group);
 
         free(data);
     }
@@ -306,25 +341,25 @@ static void _choicebox_show(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
     _run_page_handler(o);
-    evas_object_show(data->clip);
+    evas_object_show(data->background);
 }
 
 static void _choicebox_hide(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_hide(data->clip);
+    evas_object_hide(data->background);
 }
 
 static void _choicebox_clip_set(Evas_Object* o, Evas_Object* clip)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_clip_set(data->clip, clip);
+    evas_object_clip_set(data->background, clip);
 }
 
 static void _choicebox_clip_unset(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_clip_unset(data->clip);
+    evas_object_clip_unset(data->background);
 }
 
 static Evas_Smart* _choicebox_smart_get()
@@ -368,13 +403,7 @@ static void hack_update_min_height(Evas_Object* o)
     }
 }
 
-Evas_Object* choicebox_new(Evas* evas,
-                           const char* theme_file,
-                           const char* item_group,
-                           choicebox_handler_t handler,
-                           choicebox_draw_handler_t draw_handler,
-                           choicebox_page_updated_t page_handler,
-                           void* param)
+Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param)
 {
     Evas_Object* o = evas_object_smart_add(evas, _choicebox_smart_get());
     choicebox_t* data = evas_object_smart_data_get(o);
@@ -384,9 +413,10 @@ Evas_Object* choicebox_new(Evas* evas,
     data->st.size = 0;
 
     /* Data */
-    data->handler = handler;
-    data->draw_handler = draw_handler;
-    data->page_handler = page_handler;
+    data->handler = info->handler;
+    data->draw_handler = info->draw_handler;
+    data->page_handler = info->page_handler;
+    data->close_handler = info->close_handler;
     data->param = param;
 
     /* GUI */
@@ -398,27 +428,40 @@ Evas_Object* choicebox_new(Evas* evas,
     data->st.pagesize = 0;
 
     /* Theme info */
-    data->theme_file = strdup(theme_file);
-    if(!data->theme_file)
+    data->frame_theme_file = strdup(info->frame_theme_file);
+    if(!data->frame_theme_file)
         goto err;
-    data->item_group = strdup(item_group);
-    if(!data->item_group)
+    data->frame_theme_group = strdup(info->frame_theme_group);
+    if(!data->frame_theme_group)
+        goto err;
+    data->item_theme_file = strdup(info->item_theme_file);
+    if(!data->item_theme_file)
+        goto err;
+    data->item_theme_group = strdup(info->item_theme_group);
+    if(!data->item_theme_group)
         goto err;
 
+    Evas_Object* background;
     /* Widgets */
-    data->clip = evas_object_rectangle_add(evas);
-    if(!data->clip)
-        goto err;
-    evas_object_smart_member_add(data->clip, o);
+    if(!info->background)
+    {
+        background = evas_object_rectangle_add(evas);
+        evas_object_color_set(background, 0, 0, 255, 255);
+    }
+    else
+        background = info->background;
 
-    evas_object_color_set(data->clip, 255, 255, 255, 255);
+    data->background = background;
+    if(!data->background)
+        goto err;
+    evas_object_smart_member_add(data->background, o);
 
     char f[256];
     snprintf(f, 256, "choicebox/%p/background", o);
-    evas_object_name_set(data->clip, f);
+    evas_object_name_set(data->background, f);
 
     Evas_Object* tmpitem = edje_object_add(evas);
-    if(!edje_object_file_set(tmpitem, data->theme_file, data->item_group))
+    if(!edje_object_file_set(tmpitem, data->frame_theme_file, data->frame_theme_group))
     {
         evas_object_del(tmpitem);
         goto err;
@@ -433,6 +476,15 @@ Evas_Object* choicebox_new(Evas* evas,
 err:
     evas_object_del(o);
     return NULL;
+}
+
+void choicebox_set_hinted(Evas_Object* o, bool is_hinted)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+    choicebox_state_t new = data->st;
+    new.need_hints = is_hinted;
+
+    _choicebox_update(o, &new);
 }
 
 void choicebox_set_size(Evas_Object* o, int new_size)
@@ -473,7 +525,8 @@ void choicebox_invalidate_interval(Evas_Object* o, int item_from, int item_to)
     for(i = from; i < to; ++i)
     {
         int nth = i - data->st.top_item;
-        Evas_Object* item = eina_array_data_get(data->items, nth);
+        Evas_Object* frame = eina_array_data_get(data->frames, nth);
+        Evas_Object* item = edje_object_part_swallow_get(frame, "contents");
         (*data->draw_handler)(o, item, i, nth, data->param);
     }
 }
@@ -613,4 +666,11 @@ int choicebox_get_selection(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
     return data->st.sel;
+}
+
+void choicebox_request_close(Evas_Object* o)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+    if(data->close_handler)
+        (*data->close_handler)(o, data->param);
 }

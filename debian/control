@@ -1,38 +1,40 @@
-Source: echoicebox
+Source: libchoicebox
 Section: gui
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Build-Depends: debhelper (>= 7), automake, libtool, pkg-config, libecore-dev, libevas-dev, libedje-dev
+Build-Depends: debhelper (>= 7), automake, libtool, pkg-config, libecore-dev, libevas-dev, libedje-dev, libkeys-dev
 XCS-Cross-Host-Build-Depends: debhelper (>= 7), automake, libtool, pkg-config
-XCS-Cross-Build-Depends: libecore-dev, libevas-dev, libedje-dev
+XCS-Cross-Build-Depends: libecore-dev, libevas-dev, libedje-dev, libkeys-dev
 Priority: optional
 Standards-Version: 3.8.0
 
-Package: libechoicebox0
+Package: libchoicebox1
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, echoicebox-data (= ${binary:Version})
+Depends: ${shlibs:Depends}
+Conflicts: libechoicebox0, echoicebox-data
+Replaces: echoicebox-data
 Description: choicebox widget for EFL -- runtime library
  choicebox is a EFL virtual list widget optimized for
  non-touch/non-mousescreens.
  .
  This package contains runtime library.
 
-Package: echoicebox-dev
+Package: libchoicebox1-dbg
+Priority: extra
+Architecture: any
+Depends: libchoicebox1 (= ${binary:Version})
+Description: choicebox widget for EFL -- debug symbols
+ choicebox is a EFL virtual list widget optimized for
+ non-touch/non-mousescreens.
+ .
+ This package contains debug symbols for library.
+
+Package: libchoicebox-dev
 Priority: optional
 Architecture: any
-Depends: libechoicebox0 (= ${binary:Version}), ${shlibs:Depends}
+Depends: libchoicebox1 (= ${binary:Version}), ${shlibs:Depends}
 Description: choicebox widget for EFL -- development files
  choicebox is a EFL virtual list widget optimized for
  non-touch/non-mousescreens.
  .
  This package contains header files and symlinks necessary to link with library.
-
-Package: echoicebox-data
-Priority: optional
-Architecture: all
-Depends:
-Description: choicebox widget for EFL -- data files
- choicebox is a EFL virtual list widget optimized for
- non-touch/non-mousescreens.
- .
- This package contains data files with default theme.

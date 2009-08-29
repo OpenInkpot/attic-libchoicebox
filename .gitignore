@@ -7,7 +7,7 @@ config.sub
 configure
 depcomp
 .deps
-echoicebox.pc
+libchoicebox.pc
 install-sh
 *.la
 .libs
