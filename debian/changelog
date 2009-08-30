@@ -1,3 +1,10 @@
+libchoicebox (0.2-6) asimov; urgency=low
+
+  * Use separate background and clipper objects. Clippers are invisible
+    and hence can't be used as a background.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 31 Aug 2009 05:19:40 +0700
+
 libchoicebox (0.2-5) asimov; urgency=low
 
   * Fix choicebox items not being added to smart object (and hence not
