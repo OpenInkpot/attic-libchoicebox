@@ -221,24 +221,20 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
             snprintf(f, 256, "choicebox/%p/frame/%d", o, i);
             evas_object_name_set(frame, f);
 
-            evas_object_stack_above(frame, data->background);
             if(!edje_object_file_set(frame, data->frame_theme_file, data->frame_theme_group))
                 exit(17);
 
             evas_object_show(frame);
-            evas_object_clip_set(frame, data->background);
 
             Evas_Object* item = edje_object_add(evas);
             evas_object_smart_member_add(item, o);
             snprintf(f, 256, "choicebox/%p/item/%d", o, i);
             evas_object_name_set(item, f);
 
-            evas_object_stack_above(item, frame);
             if(!edje_object_file_set(item, data->item_theme_file, data->item_theme_group))
                 exit(18);
 
             evas_object_show(item);
-            evas_object_clip_set(item, frame);
 
             edje_object_part_swallow(frame, "contents", item);
 
