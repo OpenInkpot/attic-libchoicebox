@@ -67,6 +67,7 @@ typedef struct
     char* item_theme_group;
 
     /* Widgets */
+    Evas_Object* clipper;
     Evas_Object* background;
     Eina_Array* frames;
 
@@ -199,7 +200,9 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
     /** Update background **/
 
     evas_object_move(data->background, ox, oy);
+    evas_object_move(data->clipper, ox, oy);
     evas_object_resize(data->background, ow, oh);
+    evas_object_resize(data->clipper, ow, oh);
 
     /** Update items **/
 
@@ -225,6 +228,7 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
                 exit(17);
 
             evas_object_show(frame);
+            evas_object_clip_set(frame, data->clipper);
 
             Evas_Object* item = edje_object_add(evas);
             evas_object_smart_member_add(item, o);
@@ -235,6 +239,7 @@ static void _choicebox_display(Evas_Object* o, int ox, int oy, int ow, int oh)
                 exit(18);
 
             evas_object_show(item);
+            evas_object_clip_set(item, data->clipper);
 
             edje_object_part_swallow(frame, "contents", item);
 
@@ -307,6 +312,7 @@ static void _choicebox_del(Evas_Object* o)
         }
 
         evas_object_del(data->background);
+        evas_object_del(data->clipper);
 
         free(data->frame_theme_file);
         free(data->frame_theme_group);
@@ -337,25 +343,25 @@ static void _choicebox_show(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
     _run_page_handler(o);
-    evas_object_show(data->background);
+    evas_object_show(data->clipper);
 }
 
 static void _choicebox_hide(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_hide(data->background);
+    evas_object_hide(data->clipper);
 }
 
 static void _choicebox_clip_set(Evas_Object* o, Evas_Object* clip)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_clip_set(data->background, clip);
+    evas_object_clip_set(data->clipper, clip);
 }
 
 static void _choicebox_clip_unset(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);
-    evas_object_clip_unset(data->background);
+    evas_object_clip_unset(data->clipper);
 }
 
 static Evas_Smart* _choicebox_smart_get()
@@ -437,24 +443,33 @@ Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param)
     if(!data->item_theme_group)
         goto err;
 
-    Evas_Object* background;
     /* Widgets */
-    if(!info->background)
-    {
-        background = evas_object_rectangle_add(evas);
-        evas_object_color_set(background, 255, 255, 255, 255);
-    }
-    else
-        background = info->background;
+    data->clipper = evas_object_rectangle_add(evas);
+    evas_object_color_set(data->clipper, 255, 255, 255, 255);
+    evas_object_smart_member_add(data->clipper, o);
 
-    data->background = background;
+    char f[256];
+    snprintf(f, 256, "choicebox/%p/clipper", o);
+    evas_object_name_set(data->clipper, f);
+
+    if(info->background)
+        data->background = info->background;
+    else
+    {
+        data->background = evas_object_rectangle_add(evas);
+        evas_object_color_set(data->background, 255, 255, 255, 255);
+    }
+
     if(!data->background)
         goto err;
     evas_object_smart_member_add(data->background, o);
 
-    char f[256];
     snprintf(f, 256, "choicebox/%p/background", o);
     evas_object_name_set(data->background, f);
+
+    evas_object_clip_set(data->background, data->clipper);
+
+    evas_object_show(data->background);
 
     Evas_Object* tmpitem = edje_object_add(evas);
     if(!edje_object_file_set(tmpitem, data->frame_theme_file, data->frame_theme_group))
