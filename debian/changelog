@@ -1,3 +1,10 @@
+libchoicebox (0.2-5) asimov; urgency=low
+
+  * Fix choicebox items not being added to smart object (and hence not
+    being clipped correctly).
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 31 Aug 2009 02:31:43 +0700
+
 libchoicebox (0.2-4) asimov; urgency=low
 
   * Fix off-by-one error choicebox.ini 
