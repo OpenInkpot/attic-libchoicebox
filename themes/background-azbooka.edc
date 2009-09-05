@@ -1,0 +1,53 @@
+/*
+ * choicebox - Evas virtual listbox widget
+ *
+ * © 2009 Mikhail Gusarov <dottedmag@dottedmag.net>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+images {
+   image, "azbooka.png" COMP;
+}
+
+collections {
+   group {
+      name, "background";
+      parts {
+         part {
+            name, "background";
+            type, RECT;
+            description {
+               state, "default" 0.0;
+               color, 255 255 255 255;
+               rel1 { relative, 0.0 0.0; offset, 0 0; }
+               rel2 { relative, 1.0 1.0; offset, -1 -1; }
+            }
+         }
+         part {
+            name, "logo";
+            type, IMAGE;
+            description {
+               state, "default" 0.0;
+               rel1 { relative, 1.0 1.0; offset, -100 -156; }
+               rel2 { relative, 1.0 1.0; offset, -6 -6; }
+               image {
+                  normal, "azbooka.png";
+               }
+            }
+         }
+      }
+   }
+}

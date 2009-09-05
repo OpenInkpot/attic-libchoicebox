@@ -38,3 +38,12 @@ Description: choicebox widget for EFL -- development files
  non-touch/non-mousescreens.
  .
  This package contains header files and symlinks necessary to link with library.
+
+Package: libchoicebox1-settings-azbooka
+Priority: optional
+Architecture: any
+Description: choicebox widget for EFL -- data files for Azbooka
+ choicebox is a EFL virtual list widget optimized for
+ non-touch/non-mousescreens.
+ .
+ This package data files with Azbooka skin.

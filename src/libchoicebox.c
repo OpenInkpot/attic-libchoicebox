@@ -456,8 +456,13 @@ Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param)
         data->background = info->background;
     else
     {
-        data->background = evas_object_rectangle_add(evas);
-        evas_object_color_set(data->background, 255, 255, 255, 255);
+       data->background = edje_object_add(evas);
+       if(!edje_object_file_set(data->background, DATADIR "/choicebox/background.edj", "background"))
+       {
+          evas_object_del(data->background);
+          data->background = evas_object_rectangle_add(evas);
+          evas_object_color_set(data->background, 255, 255, 255, 255);
+       }
     }
 
     if(!data->background)
