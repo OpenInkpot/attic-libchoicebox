@@ -1,3 +1,11 @@
+libchoicebox (0.2-7) asimov; urgency=low
+
+  * Add support for optional background.edj
+  * Added libchoicebox1-settings-azbooka with Azbooka-specific background.
+  * Added support for number-hinting in list items.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 06 Sep 2009 02:37:54 +0700
+
 libchoicebox (0.2-6) asimov; urgency=low
 
   * Use separate background and clipper objects. Clippers are invisible
