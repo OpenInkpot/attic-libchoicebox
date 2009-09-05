@@ -39,16 +39,19 @@ static void exit_app(void* param)
     ecore_main_loop_quit();
 }
 
+static bool is_hinted;
+
 static void close_handler(Evas_Object* choicebox, void* param)
 {
-    ecore_main_loop_quit();
+    is_hinted = !is_hinted;
+    choicebox_set_hinted(choicebox, is_hinted);
 }
 
 static void draw_handler(Evas_Object* choicebox, Evas_Object* item,
                          int item_num, int page_position, void* param)
 {
     char f[512];
-    sprintf(f, "%d", item_num);
+    sprintf(f, "Item %d", item_num);
     edje_object_part_text_set(item, "text", f);
 }
 
@@ -60,7 +63,7 @@ static void page_handler(Evas_Object* choicebox, int cur_page, int total_pages,
 static void item_handler(Evas_Object* choicebox, int item_num, bool is_alt,
                          void* param)
 {
-    printf("%d %d\n", item_num, is_alt ? 1 : 0);
+    printf("Item %d %d\n", item_num, is_alt ? 1 : 0);
 }
 
 static void main_win_resize_handler(Ecore_Evas* main_win)
@@ -87,9 +90,9 @@ static void run()
 
     choicebox_info_t info = {
         NULL,
-        "../themes/echoicebox.edj",
+        "../themes/choicebox.edj",
         "full",
-        "../themes/echoicebox.edj",
+        "../themes/choicebox.edj",
         "item-default",
         item_handler,
         draw_handler,
@@ -98,6 +101,8 @@ static void run()
     };
 
     Evas_Object* choicebox = choicebox_new(main_canvas, &info, NULL);
+    if(!choicebox)
+        die("Unable to create choicebox");
 
     choicebox_set_size(choicebox, 60000);
     evas_object_name_set(choicebox, "choicebox");
