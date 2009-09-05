@@ -19,4 +19,4 @@ Makefile.in
 missing
 *.o
 *.mo
-
+src/teste
