@@ -684,6 +684,28 @@ int choicebox_get_selection(Evas_Object* o)
     return data->st.sel;
 }
 
+void choicebox_scroll_to(Evas_Object* o, int item_num)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+
+    if(item_num < 0 || item_num >= data->st.size)
+        return;
+
+    choicebox_state_t new = data->st;
+    new.top_item = item_num;
+
+    if(new.sel < new.top_item || new.sel > new.top_item + new.pagesize)
+        new.sel = -1;
+
+    _choicebox_update(o, &new);
+}
+
+int choicebox_get_scroll_pos(Evas_Object* o)
+{
+    choicebox_t* data = evas_object_smart_data_get(o);
+    return data->st.top_item;
+}
+
 void choicebox_request_close(Evas_Object* o)
 {
     choicebox_t* data = evas_object_smart_data_get(o);

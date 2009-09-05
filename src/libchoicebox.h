@@ -107,6 +107,12 @@ void choicebox_set_selection(Evas_Object* e, int item_num);
 int choicebox_get_selection(Evas_Object* e);
 
 /*
+ * Returns -1 if no items on screen
+ */
+int choicebox_get_scroll_pos(Evas_Object* e);
+void choicebox_scroll_to(Evas_Object* e, int item_num);
+
+/*
  * Just calls the close handler if any.
  */
 void choicebox_request_close(Evas_Object* e);
