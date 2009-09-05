@@ -79,25 +79,41 @@ styles {
          name, "set_number";                                            \
          signal, "set_number,*";                                        \
          script {                                                       \
-            new number_arg[100];                                        \
-            getsarg(0, number_arg, 100);                                \
-            new number_s[100];                                          \
-            strcut(number_s, number_arg, 11, 100);                      \
-            new number = atoi(number_s);                                \
+             new number_arg[100];                                       \
+             getsarg(0, number_arg, 100);                               \
+             new number_s[100];                                         \
+             strcut(number_s, number_arg, 11, 100);                     \
+             new number = atoi(number_s);                               \
                                                                         \
-            if(number%2 == 0)                                           \
+            getsarg(0, number_arg, 100);                                \
+            new is_hinted_s[100];                                       \
+            strcut(is_hinted_s, number_arg, 13, 100);                   \
+                                                                        \
+            if(!strcmp(is_hinted_s, "hinted"))                          \
             {                                                           \
-               set_state(PART:"clipper", "enabled", 0.0);               \
-               set_state(PART:"background-img", EVEN_STYLE, 0.0);       \
-               set_state(PART:"left-side", EVEN_STYLE, 0.0);            \
-               set_state(PART:"right-side", EVEN_STYLE, 0.0);           \
+                new d[3];                                               \
+                snprintf(d, 3, "%d", number+1);                         \
+                set_text(PART:"number", d);                             \
+                set_state(PART:"number", "default", 0.0);               \
             }                                                           \
             else                                                        \
             {                                                           \
-               set_state(PART:"clipper", "enabled", 0.0);               \
-               set_state(PART:"background-img", ODD_STYLE, 0.0);        \
-               set_state(PART:"left-side", ODD_STYLE, 0.0);             \
-               set_state(PART:"right-side", ODD_STYLE, 0.0);            \
+                set_state(PART:"number", "hidden", 0.0);                \
+            }                                                           \
+                                                                        \
+            if(number%2 == 0)                                           \
+            {                                                           \
+                set_state(PART:"clipper", "enabled", 0.0);              \
+                set_state(PART:"left-side", EVEN_STYLE, 0.0);           \
+                set_state(PART:"background-img", EVEN_STYLE, 0.0);      \
+                set_state(PART:"right-side", EVEN_STYLE, 0.0);          \
+            }                                                           \
+            else                                                        \
+            {                                                           \
+                set_state(PART:"clipper", "enabled", 0.0);              \
+                set_state(PART:"left-side", ODD_STYLE, 0.0);            \
+                set_state(PART:"background-img", ODD_STYLE, 0.0);       \
+                set_state(PART:"right-side", ODD_STYLE, 0.0);           \
             }                                                           \
          }                                                              \
       }                                                                 \
@@ -285,30 +301,23 @@ styles {
          part { \
             name, "background-img"; \
             type, IMAGE; \
-            mouse_events, 0; \
             clip_to, "clipper"; \
             description { \
                state, "default" 0.0; \
                rel1 { relative, 0.0 0.0; offset, 1 0; } \
                rel2 { relative, 1.0 1.0; offset, -15 -1; } \
-               image { \
-                  normal, "grid1-body.png"; \
-               } \
+               image { normal, "grid1-body.png"; } \
                fill { \
-                  size { \
-                     relative, 0.0 0.0; \
-                     offset, 600 78; \
-                  } \
+                  size { relative, 0.0 0.0; offset, 600 78; } \
                } \
             } \
             description { \
                state, "alternate" 0.0; \
                inherit, "default" 0.0; \
-               image { \
-                  normal, "grid2-body.png"; \
-               } \
+               image { normal, "grid2-body.png"; } \
             } \
          } \
+         NUMBERS(1.0, -70, 1.0, -20) \
          SELECTION_PARTS(0, -15) \
          CONTENTS_SWALLOW(1, -16) \
       } \
@@ -326,6 +335,34 @@ styles {
            rel2 { relative, 1.0 1.0; offset, RIGHT_OFFSET -1; } \
        } \
    }
+
+#define NUMBERS(LEFT_ALIGN, LEFT_OFFSET, RIGHT_ALIGN, RIGHT_OFFSET)      \
+    part { \
+        name, "number"; \
+        type, TEXT; \
+        clip_to, "clipper"; \
+        description { \
+            state, "default" 0.0; \
+            color, 128 128 128 255; \
+            rel1 { \
+                relative, LEFT_ALIGN 0.0; \
+                offset, LEFT_OFFSET 0; \
+            } \
+            rel2 { \
+                relative, RIGHT_ALIGN 1.0; \
+                offset, RIGHT_OFFSET -5; \
+            } \
+            text { \
+                font, "sans-serif:bold";         \
+                size, 78; \
+            } \
+        } \
+        description { \
+            state, "hidden" 0.0; \
+            inherit, "default" 0.0; \
+            color, 0 0 0 0; \
+        } \
+    }
 
 collections {
    group {
@@ -391,18 +428,8 @@ collections {
                image { normal, "grid2-body.png"; }
             }
          }
+         NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -15)
-
-         /*     part  */
-         /* { */
-         /*     name, "background"; */
-         /*     type, RECT; */
-         /*     description { */
-         /*         state, "default" 0.0; */
-         /*         color, 255 0 0 255; */
-         /*     } */
-         /* } */
-
          CONTENTS_SWALLOW(15, -16)
       }
       MIN_HEIGHT_HACK
@@ -455,30 +482,23 @@ collections {
          part {
             name, "background-img";
             type, IMAGE;
-            mouse_events, 0;
             clip_to, "clipper";
             description {
                state, "default" 0.0;
                rel1 { relative, 0.0 0.0; offset, 15 0; }
                rel2 { relative, 1.0 1.0; offset, -2 -1; }
-               image {
-                  normal, "grid1-body.png";
-               }
+               image { normal, "grid1-body.png"; }
                fill {
-                  size {
-                     relative, 0.0 0.0;
-                     offset, 600 78;
-                  }
+                  size { relative, 0.0 0.0; offset, 600 78; }
                }
             }
             description {
                state, "alternate" 0.0;
                inherit, "default" 0.0;
-               image {
-                  normal, "grid2-body.png";
-               }
+               image { normal, "grid2-body.png"; }
             }
          }
+         NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -1)
          CONTENTS_SWALLOW(15, -2)
       }
