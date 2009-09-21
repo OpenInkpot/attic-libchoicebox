@@ -16,6 +16,7 @@ else
 endif
 
 AZBOOKA_DIR=$(CURDIR)/debian/libchoicebox1-settings-azbooka/usr/share/choicebox
+V3_DIR=$(CURDIR)/debian/libchoicebox1-settings-v3/etc/keys
 
 configure: configure-stamp
 configure-stamp:
@@ -48,8 +49,21 @@ install: build
 
 	mkdir -p $(AZBOOKA_DIR)
 	mv $(CURDIR)/debian/tmp/usr/share/choicebox/background-azbooka.edj $(AZBOOKA_DIR)/background.edj
+	mkdir -p $(V3_DIR)
+	cp $(CURDIR)/debian/v3.ini $(V3_DIR)/choicebox.ini
 
-binary-indep:
+binary-indep: install
+	dh_testdir
+	dh_testroot
+
+	dh_install -i --sourcedir=debian/tmp
+	dh_link -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
 
 binary-arch: install
 	dh_testdir

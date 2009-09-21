@@ -47,3 +47,12 @@ Description: choicebox widget for EFL -- data files for Azbooka
  non-touch/non-mousescreens.
  .
  This package data files with Azbooka skin.
+
+Package: libchoicebox1-settings-v3
+Priority: optional
+Architecture: all
+Description: choicebox widget for EFL -- data files for Hanlin V3
+ choicebox is a EFL virtual list widget optimized for
+ non-touch/non-mousescreens.
+ .
+ This package contains keybindings file for Hanlin V3.
