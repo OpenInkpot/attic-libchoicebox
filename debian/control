@@ -41,7 +41,7 @@ Description: choicebox widget for EFL -- development files
 
 Package: libchoicebox1-settings-azbooka
 Priority: optional
-Architecture: any
+Architecture: all
 Description: choicebox widget for EFL -- data files for Azbooka
  choicebox is a EFL virtual list widget optimized for
  non-touch/non-mousescreens.
