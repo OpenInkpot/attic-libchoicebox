@@ -1,3 +1,10 @@
+libchoicebox (0.2-9) asimov; urgency=low
+
+  * Fix keymapping for V3 (OI#484)
+  * Make libchoicebox1-settings-azbooka package arch-indep
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 21 Sep 2009 15:26:54 +0700
+
 libchoicebox (0.2-8) asimov; urgency=low
 
   * Add choicebox_get_scroll_pos/choicebox_scroll_to interface.
