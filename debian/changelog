@@ -1,3 +1,10 @@
+libchoicebox (0.2-10) asimov; urgency=low
+
+  * Adjust theme to avoid clobbering item background and hint number by
+    selection cursor (OI#581).
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 27 Oct 2009 23:46:47 +0600
+
 libchoicebox (0.2-9) asimov; urgency=low
 
   * Fix keymapping for V3 (OI#484)
