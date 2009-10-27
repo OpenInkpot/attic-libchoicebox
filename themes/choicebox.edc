@@ -95,23 +95,37 @@ styles {
                 snprintf(d, 3, "%d", number+1);                         \
                 set_text(PART:"number", d);                             \
                 set_state(PART:"number", "default", 0.0);               \
+                set_state(PART:"contents", "shifted", 0.0);             \
+                                                                        \
+                if(number%2 == 0) {                                     \
+                   set_state(PART:"hint-background-img", EVEN_STYLE, 0.0); \
+                   set_state(PART:"left-side", ODD_STYLE, 0.0);         \
+                } else {                                                \
+                   set_state(PART:"hint-background-img", ODD_STYLE, 0.0); \
+                   set_state(PART:"left-side", EVEN_STYLE, 0.0);        \
+                }                                                       \
             }                                                           \
             else                                                        \
             {                                                           \
                 set_state(PART:"number", "hidden", 0.0);                \
+                set_state(PART:"contents", "default", 0.0);             \
+                set_state(PART:"hint-background-img", "disabled", 0.0); \
+                if(number%2 == 0) {                                     \
+                   set_state(PART:"left-side", EVEN_STYLE, 0.0);        \
+                } else {                                                \
+                   set_state(PART:"left-side", ODD_STYLE, 0.0);         \
+                }                                                       \
             }                                                           \
                                                                         \
             if(number%2 == 0)                                           \
             {                                                           \
                 set_state(PART:"clipper", "enabled", 0.0);              \
-                set_state(PART:"left-side", EVEN_STYLE, 0.0);           \
                 set_state(PART:"background-img", EVEN_STYLE, 0.0);      \
                 set_state(PART:"right-side", EVEN_STYLE, 0.0);          \
             }                                                           \
             else                                                        \
             {                                                           \
                 set_state(PART:"clipper", "enabled", 0.0);              \
-                set_state(PART:"left-side", ODD_STYLE, 0.0);            \
                 set_state(PART:"background-img", ODD_STYLE, 0.0);       \
                 set_state(PART:"right-side", ODD_STYLE, 0.0);           \
             }                                                           \
@@ -240,6 +254,50 @@ styles {
       }                                                                 \
    }
 
+#define BACKGROUND_IMG(LEFT_OFFSET, RIGHT_HINT_OFFSET, RIGHT_OFFSET)     \
+         part { \
+            name, "background-img"; \
+            type, IMAGE; \
+            clip_to, "clipper"; \
+            description { \
+               state, "default" 0.0; \
+               rel1 { relative, 0.0 0.0; offset, LEFT_OFFSET 0; } \
+               rel2 { relative, 1.0 1.0; offset, RIGHT_OFFSET -1; } \
+               image { normal, "grid1-body.png"; } \
+               fill { \
+                  size { relative, 0.0 0.0; offset, 600 78; } \
+               } \
+            } \
+            description { \
+               state, "alternate" 0.0; \
+               inherit, "default" 0.0; \
+               image { normal, "grid2-body.png"; } \
+            } \
+         } \
+         part { \
+            name, "hint-background-img"; \
+            type, IMAGE; \
+            clip_to, "clipper"; \
+            description { \
+               state, "default" 0.0; \
+               rel1 { relative, 0.0 0.0; offset, LEFT_OFFSET 0; } \
+               rel2 { relative, 0.0 1.0; offset, RIGHT_HINT_OFFSET -1; } \
+               image { normal, "grid2-body.png"; } \
+            } \
+            description { \
+               state, "alternate" 0.0; \
+               inherit, "default" 0.0; \
+               image { normal, "grid1-body.png"; } \
+               fill { \
+                  size { relative, 0.0 0.0; offset, 600 78; } \
+               } \
+            } \
+            description { \
+               state, "disabled" 0.0; \
+               visible, 0; \
+            } \
+         } \
+
 #define RIGHT_ITEM \
       parts { \
          CLIPPER \
@@ -285,32 +343,14 @@ styles {
                } \
             } \
          } \
-         part { \
-            name, "background-img"; \
-            type, IMAGE; \
-            clip_to, "clipper"; \
-            description { \
-               state, "default" 0.0; \
-               rel1 { relative, 0.0 0.0; offset, 1 0; } \
-               rel2 { relative, 1.0 1.0; offset, -15 -1; } \
-               image { normal, "grid1-body.png"; } \
-               fill { \
-                  size { relative, 0.0 0.0; offset, 600 78; } \
-               } \
-            } \
-            description { \
-               state, "alternate" 0.0; \
-               inherit, "default" 0.0; \
-               image { normal, "grid2-body.png"; } \
-            } \
-         } \
+         BACKGROUND_IMG(1, 58, -15)   \
          NUMBERS(1.0, -70, 1.0, -20) \
          SELECTION_PARTS(0, -15) \
-         CONTENTS_SWALLOW(1, -16) \
+         CONTENTS_SWALLOW(1, 59, -16) \
       } \
       MIN_HEIGHT_HACK
 
-#define CONTENTS_SWALLOW(LEFT_OFFSET, RIGHT_OFFSET) \
+#define CONTENTS_SWALLOW(LEFT_OFFSET, LEFT_SHIFTED_OFFSET, RIGHT_OFFSET) \
    /* Contents */ \
    part { \
        name, "contents"; \
@@ -319,6 +359,11 @@ styles {
        description { \
            state, "default" 0.0; \
            rel1 { relative, 0.0 0.0; offset, LEFT_OFFSET 0; } \
+           rel2 { relative, 1.0 1.0; offset, RIGHT_OFFSET -1; } \
+       } \
+       description { \
+           state, "shifted" 0.0; \
+           rel1 { relative, 0.0 0.0; offset, LEFT_SHIFTED_OFFSET 0; } \
            rel2 { relative, 1.0 1.0; offset, RIGHT_OFFSET -1; } \
        } \
    }
@@ -396,28 +441,10 @@ collections {
                image { normal, "grid2-side-right.png"; }
             }
          }
-         part {
-            name, "background-img";
-            type, IMAGE;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 0.0 0.0; offset, 15 0; }
-               rel2 { relative, 1.0 1.0; offset, -16 -1; }
-               image { normal, "grid1-body.png"; }
-               fill {
-                  size { relative, 0.0 0.0; offset, 600 78; }
-               }
-            }
-            description {
-               state, "alternate" 0.0;
-               inherit, "default" 0.0;
-               image { normal, "grid2-body.png"; }
-            }
-         }
+         BACKGROUND_IMG(15, 72, -16)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -15)
-         CONTENTS_SWALLOW(15, -16)
+         CONTENTS_SWALLOW(15, 73, -16)
       }
       MIN_HEIGHT_HACK
       STD_PROGRAMS("default", "alternate")
@@ -466,28 +493,10 @@ collections {
                rel2 { relative, 1.0 1.0; offset, -1 -1; }
             }
          }
-         part {
-            name, "background-img";
-            type, IMAGE;
-            clip_to, "clipper";
-            description {
-               state, "default" 0.0;
-               rel1 { relative, 0.0 0.0; offset, 15 0; }
-               rel2 { relative, 1.0 1.0; offset, -2 -1; }
-               image { normal, "grid1-body.png"; }
-               fill {
-                  size { relative, 0.0 0.0; offset, 600 78; }
-               }
-            }
-            description {
-               state, "alternate" 0.0;
-               inherit, "default" 0.0;
-               image { normal, "grid2-body.png"; }
-            }
-         }
+         BACKGROUND_IMG(15, 72, -2)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -1)
-         CONTENTS_SWALLOW(15, -2)
+         CONTENTS_SWALLOW(15, 73, -2)
       }
       MIN_HEIGHT_HACK
       STD_PROGRAMS("default", "alternate")
