@@ -79,11 +79,11 @@ styles {
          name, "set_number";                                            \
          signal, "set_number,*";                                        \
          script {                                                       \
-             new number_arg[100];                                       \
-             getsarg(0, number_arg, 100);                               \
-             new number_s[100];                                         \
-             strcut(number_s, number_arg, 11, 100);                     \
-             new number = atoi(number_s);                               \
+            new number_arg[100];                                        \
+            getsarg(0, number_arg, 100);                                \
+            new number_s[100];                                          \
+            strcut(number_s, number_arg, 11, 100);                      \
+            new number = atoi(number_s);                                \
                                                                         \
             getsarg(0, number_arg, 100);                                \
             new is_hinted_s[100];                                       \
@@ -158,7 +158,6 @@ styles {
             rel2 { relative, 1.0 1.0; offset, RIGHT_MARGIN -1; }        \
         }                                                               \
     }
-
 
 #define SELECTION_PARTS(LEFT_WIDTH, RIGHT_WIDTH)                        \
    part {                                                               \
