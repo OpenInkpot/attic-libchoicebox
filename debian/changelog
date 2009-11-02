@@ -1,3 +1,9 @@
+libchoicebox (0.2-12) asimov; urgency=low
+
+  * Fix background in right half-screen theme (related to OI#580).
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 02 Nov 2009 22:42:44 +0600
+
 libchoicebox (0.2-11) asimov; urgency=low
 
   * New translation: Latvian.
