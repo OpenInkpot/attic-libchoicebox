@@ -100,9 +100,11 @@ styles {
                 if(number%2 == 0) {                                     \
                    set_state(PART:"hint-background-img", EVEN_STYLE, 0.0); \
                    set_state(PART:"left-side", ODD_STYLE, 0.0);         \
+                   set_state(PART:"right-side", ODD_STYLE, 0.0);         \
                 } else {                                                \
                    set_state(PART:"hint-background-img", ODD_STYLE, 0.0); \
                    set_state(PART:"left-side", EVEN_STYLE, 0.0);        \
+                   set_state(PART:"right-side", EVEN_STYLE, 0.0);       \
                 }                                                       \
             }                                                           \
             else                                                        \
@@ -112,8 +114,10 @@ styles {
                 set_state(PART:"hint-background-img", "disabled", 0.0); \
                 if(number%2 == 0) {                                     \
                    set_state(PART:"left-side", EVEN_STYLE, 0.0);        \
+                   set_state(PART:"right-side", EVEN_STYLE, 0.0);       \
                 } else {                                                \
                    set_state(PART:"left-side", ODD_STYLE, 0.0);         \
+                   set_state(PART:"right-side", ODD_STYLE, 0.0);        \
                 }                                                       \
             }                                                           \
                                                                         \
@@ -121,13 +125,11 @@ styles {
             {                                                           \
                 set_state(PART:"clipper", "enabled", 0.0);              \
                 set_state(PART:"background-img", EVEN_STYLE, 0.0);      \
-                set_state(PART:"right-side", EVEN_STYLE, 0.0);          \
             }                                                           \
             else                                                        \
             {                                                           \
                 set_state(PART:"clipper", "enabled", 0.0);              \
                 set_state(PART:"background-img", ODD_STYLE, 0.0);       \
-                set_state(PART:"right-side", ODD_STYLE, 0.0);           \
             }                                                           \
          }                                                              \
       }                                                                 \
@@ -254,7 +256,7 @@ styles {
       }                                                                 \
    }
 
-#define BACKGROUND_IMG(LEFT_OFFSET, RIGHT_HINT_OFFSET, RIGHT_OFFSET)     \
+#define BACKGROUND_IMG(LEFT_OFFSET, RIGHT_OFFSET, LEFT_HINT_OFFSET, RIGHT_HINT_OFFSET, RIGHT_HINT_REL) \
          part { \
             name, "background-img"; \
             type, IMAGE; \
@@ -280,8 +282,8 @@ styles {
             clip_to, "clipper"; \
             description { \
                state, "default" 0.0; \
-               rel1 { relative, 0.0 0.0; offset, LEFT_OFFSET 0; } \
-               rel2 { relative, 0.0 1.0; offset, RIGHT_HINT_OFFSET -1; } \
+               rel1 { relative, RIGHT_HINT_REL 0.0; offset, LEFT_HINT_OFFSET 0; } \
+               rel2 { relative, RIGHT_HINT_REL 1.0; offset, RIGHT_HINT_OFFSET -1; } \
                image { normal, "grid2-body.png"; } \
             } \
             description { \
@@ -343,8 +345,8 @@ styles {
                } \
             } \
          } \
-         BACKGROUND_IMG(1, 58, -15)   \
-         NUMBERS(1.0, -70, 1.0, -20) \
+         BACKGROUND_IMG(1, -15, -72, -15, 1.0)                              \
+         NUMBERS(1.0, -68, 1.0, -19) \
          SELECTION_PARTS(0, -15) \
          CONTENTS_SWALLOW(1, 59, -16) \
       } \
@@ -441,7 +443,7 @@ collections {
                image { normal, "grid2-side-right.png"; }
             }
          }
-         BACKGROUND_IMG(15, 72, -16)
+         BACKGROUND_IMG(15, -16, 15, 72, 0)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -15)
          CONTENTS_SWALLOW(15, 73, -16)
@@ -493,7 +495,7 @@ collections {
                rel2 { relative, 1.0 1.0; offset, -1 -1; }
             }
          }
-         BACKGROUND_IMG(15, 72, -2)
+         BACKGROUND_IMG(15, -2, 15, 72, 0)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -1)
          CONTENTS_SWALLOW(15, 73, -2)
