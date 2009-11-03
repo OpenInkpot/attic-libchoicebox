@@ -1,4 +1,4 @@
-libchoicebox (0.2-13) UNRELEASED; urgency=low
+libchoicebox (0.2-13) asimov; urgency=low
 
   * Fix typo in echoicebox.ini for V3 (OI#618)
 
