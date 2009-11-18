@@ -348,11 +348,11 @@ styles {
          BACKGROUND_IMG(1, -15, -72, -15, 1.0)                              \
          NUMBERS(1.0, -68, 1.0, -19) \
          SELECTION_PARTS(0, -15) \
-         CONTENTS_SWALLOW(1, 59, -16) \
+         CONTENTS_SWALLOW(1, 1, -16, -75)                               \
       } \
       MIN_HEIGHT_HACK
 
-#define CONTENTS_SWALLOW(LEFT_OFFSET, LEFT_SHIFTED_OFFSET, RIGHT_OFFSET) \
+#define CONTENTS_SWALLOW(LEFT_OFFSET, LEFT_SHIFTED_OFFSET, RIGHT_OFFSET, RIGHT_SHIFTED_OFFSET) \
    /* Contents */ \
    part { \
        name, "contents"; \
@@ -366,7 +366,7 @@ styles {
        description { \
            state, "shifted" 0.0; \
            rel1 { relative, 0.0 0.0; offset, LEFT_SHIFTED_OFFSET 0; } \
-           rel2 { relative, 1.0 1.0; offset, RIGHT_OFFSET -1; } \
+           rel2 { relative, 1.0 1.0; offset, RIGHT_SHIFTED_OFFSET -1; } \
        } \
    }
 
@@ -446,7 +446,7 @@ collections {
          BACKGROUND_IMG(15, -16, 15, 72, 0)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -15)
-         CONTENTS_SWALLOW(15, 73, -16)
+         CONTENTS_SWALLOW(15, 73, -16, -16)
       }
       MIN_HEIGHT_HACK
       STD_PROGRAMS("default", "alternate")
@@ -498,7 +498,7 @@ collections {
          BACKGROUND_IMG(15, -2, 15, 72, 0)
          NUMBERS(0.0, 20, 0.0, 70)
          SELECTION_PARTS(14, -1)
-         CONTENTS_SWALLOW(15, 73, -2)
+         CONTENTS_SWALLOW(15, 73, -2, -2)
       }
       MIN_HEIGHT_HACK
       STD_PROGRAMS("default", "alternate")
