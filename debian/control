@@ -22,6 +22,7 @@ Description: choicebox widget for EFL -- runtime library
 Package: libchoicebox1-dbg
 Priority: extra
 Architecture: any
+Section: debug
 Depends: libchoicebox1 (= ${binary:Version})
 Description: choicebox widget for EFL -- debug symbols
  choicebox is a EFL virtual list widget optimized for
