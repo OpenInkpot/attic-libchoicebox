@@ -24,24 +24,21 @@
 #include <stdbool.h>
 #include <Evas.h>
 
-typedef void (*choicebox_handler_t)(Evas_Object* choicebox,
-                                    int item_num,
-                                    bool is_alt,
-                                    void* param);
+typedef void (*choicebox_handler_t) (Evas_Object * choicebox,
+                                     int item_num,
+                                     bool is_alt, void *param);
 
-typedef void (*choicebox_draw_handler_t)(Evas_Object* choicebox,
-                                         Evas_Object* item,
-                                         int item_num,
-                                         int page_position,
-                                         void* param);
+typedef void (*choicebox_draw_handler_t) (Evas_Object * choicebox,
+                                          Evas_Object * item,
+                                          int item_num,
+                                          int page_position, void *param);
 
-typedef void (*choicebox_page_updated_t)(Evas_Object* choicebox,
-                                         int cur_page,
-                                         int total_pages,
-                                         void* param);
+typedef void (*choicebox_page_updated_t) (Evas_Object * choicebox,
+                                          int cur_page,
+                                          int total_pages, void *param);
 
-typedef void (*choicebox_close_handler_t)(Evas_Object* choicebox,
-                                          void* param);
+typedef void (*choicebox_close_handler_t) (Evas_Object * choicebox,
+                                           void *param);
 
 /*
  * Choicebox uses groups $item_group from theme file.
@@ -60,62 +57,63 @@ typedef void (*choicebox_close_handler_t)(Evas_Object* choicebox,
  * this.
  */
 
-typedef struct
-{
-    Evas_Object* background;
-    const char* frame_theme_file;
-    const char* frame_theme_group;
-    const char* item_theme_file;
-    const char* item_theme_group;
+typedef struct {
+    Evas_Object *background;
+    const char *frame_theme_file;
+    const char *frame_theme_group;
+    const char *item_theme_file;
+    const char *item_theme_group;
     choicebox_handler_t handler;
     choicebox_draw_handler_t draw_handler;
     choicebox_page_updated_t page_handler;
-    choicebox_close_handler_t close_handler; /* Can be NULL */
+    choicebox_close_handler_t close_handler;    /* Can be NULL */
 } choicebox_info_t;
 
-Evas_Object* choicebox_new(Evas* evas, choicebox_info_t* info, void* param);
+Evas_Object *choicebox_new(Evas * evas, choicebox_info_t * info,
+                           void *param);
 
 /*
  * Enables/disables key hinting
  */
-void choicebox_set_hinted(Evas_Object* e, bool is_hinted);
+void choicebox_set_hinted(Evas_Object * e, bool is_hinted);
 
-void choicebox_set_size(Evas_Object* e, int size);
-void choicebox_invalidate_item(Evas_Object* e, int item_num);
+void choicebox_set_size(Evas_Object * e, int size);
+void choicebox_invalidate_item(Evas_Object * e, int item_num);
 /* Invalidates [item_from,item_to) half-open interval */
-void choicebox_invalidate_interval(Evas_Object* e, int item_from, int item_to);
+void choicebox_invalidate_interval(Evas_Object * e, int item_from,
+                                   int item_to);
 
 /* This is mostly for keyboard handling */
 
-void choicebox_prev(Evas_Object* e);
-void choicebox_next(Evas_Object* e);
+void choicebox_prev(Evas_Object * e);
+void choicebox_next(Evas_Object * e);
 
-void choicebox_prev_pages(Evas_Object* e, int n);
-void choicebox_next_pages(Evas_Object* e, int n);
+void choicebox_prev_pages(Evas_Object * e, int n);
+void choicebox_next_pages(Evas_Object * e, int n);
 
 /* Compatibility */
-#define choicebox_prevpage(e) (choicebox_prev_pages(e, 1))
-#define choicebox_nextpage(e) (choicebox_next_pages(e, 1))
+#  define choicebox_prevpage(e) (choicebox_prev_pages(e, 1))
+#  define choicebox_nextpage(e) (choicebox_next_pages(e, 1))
 
-void choicebox_activate_nth_visible(Evas_Object* e, int nth, bool is_alt);
-void choicebox_activate_current(Evas_Object* e, bool is_alt);
+void choicebox_activate_nth_visible(Evas_Object * e, int nth, bool is_alt);
+void choicebox_activate_current(Evas_Object * e, bool is_alt);
 
-void choicebox_set_selection(Evas_Object* e, int item_num);
+void choicebox_set_selection(Evas_Object * e, int item_num);
 /*
  * Returns -1 if no item is selected.
  */
-int choicebox_get_selection(Evas_Object* e);
+int choicebox_get_selection(Evas_Object * e);
 
 /*
  * Returns -1 if no items on screen
  */
-int choicebox_get_scroll_pos(Evas_Object* e);
-void choicebox_scroll_to(Evas_Object* e, int item_num);
+int choicebox_get_scroll_pos(Evas_Object * e);
+void choicebox_scroll_to(Evas_Object * e, int item_num);
 
 /*
  * Just calls the close handler if any.
  */
-void choicebox_request_close(Evas_Object* e);
+void choicebox_request_close(Evas_Object * e);
 
 /*
  * Auxiliary utility functions
@@ -135,8 +133,9 @@ void choicebox_request_close(Evas_Object* e);
  *     choicebox_aux_footer_handler(footer, "pagination", cur_page, total_pages);
  * }
  */
-void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
-                                      int cur_page, int total_pages);
+void choicebox_aux_edje_footer_handler(Evas_Object * footer,
+                                       const char *part, int cur_page,
+                                       int total_pages);
 
 /*
  * Sample implementation of Key_Up handler.
@@ -161,13 +160,13 @@ void choicebox_aux_edje_footer_handler(Evas_Object* footer, const char* part,
  * }
  */
 
-bool choicebox_aux_key_up_handler(Evas_Object* choicebox,
-                                    Evas_Event_Key_Up* ev);
+bool choicebox_aux_key_up_handler(Evas_Object * choicebox,
+                                  Evas_Event_Key_Up * ev);
 
 /*
  * Subscribes choicebox to Key_Up event with default keybindings (see
  * choicebox_aux_key_up_handler).
  */
-void choicebox_aux_subscribe_key_up(Evas_Object* choicebox);
+void choicebox_aux_subscribe_key_up(Evas_Object * choicebox);
 
 #endif

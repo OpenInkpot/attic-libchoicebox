@@ -14,7 +14,8 @@
 
 #include <libchoicebox.h>
 
-static void die(const char* fmt, ...)
+static void
+die(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -23,70 +24,82 @@ static void die(const char* fmt, ...)
     exit(EXIT_FAILURE);
 }
 
-static int exit_handler(void* param, int ev_type, void* event)
+static int
+exit_handler(void *param, int ev_type, void *event)
 {
     ecore_main_loop_quit();
     return 1;
 }
 
-static void main_win_close_handler(Ecore_Evas* main_win)
+static void
+main_win_close_handler(Ecore_Evas * main_win)
 {
     ecore_main_loop_quit();
 }
 
-static void exit_app(void* param)
+static void
+exit_app(void *param)
 {
     ecore_main_loop_quit();
 }
 
 static bool is_hinted;
 
-static void close_handler(Evas_Object* choicebox, void* param)
+static void
+close_handler(Evas_Object * choicebox, void *param)
 {
     is_hinted = !is_hinted;
     choicebox_set_hinted(choicebox, is_hinted);
 }
 
-static void draw_handler(Evas_Object* choicebox, Evas_Object* item,
-                         int item_num, int page_position, void* param)
+static void
+draw_handler(Evas_Object * choicebox, Evas_Object * item,
+             int item_num, int page_position, void *param)
 {
     char f[512];
     sprintf(f, "Item %d", item_num);
     edje_object_part_text_set(item, "text", f);
 }
 
-static void page_handler(Evas_Object* choicebox, int cur_page, int total_pages,
-                         void* param)
+static void
+page_handler(Evas_Object * choicebox, int cur_page, int total_pages,
+             void *param)
 {
 }
 
-static void item_handler(Evas_Object* choicebox, int item_num, bool is_alt,
-                         void* param)
+static void
+item_handler(Evas_Object * choicebox, int item_num, bool is_alt,
+             void *param)
 {
     printf("Item %d %d\n", item_num, is_alt ? 1 : 0);
 }
 
-static void main_win_resize_handler(Ecore_Evas* main_win)
+static void
+main_win_resize_handler(Ecore_Evas * main_win)
 {
-    Evas* canvas = ecore_evas_get(main_win);
+    Evas *canvas = ecore_evas_get(main_win);
     int w, h;
     evas_output_size_get(canvas, &w, &h);
 
-    Evas_Object* choicebox = evas_object_name_find(canvas, "choicebox");
+    Evas_Object *choicebox = evas_object_name_find(canvas, "choicebox");
     evas_object_resize(choicebox, w, h);
 }
 
-static void run()
+static void
+run()
 {
     ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT, exit_handler, NULL);
 
-    Ecore_Evas* main_win = ecore_evas_software_x11_new(0, 0, 0, 0, 600, 800);
+    Ecore_Evas *main_win =
+        ecore_evas_software_x11_new(0, 0, 0, 0, 600, 800);
     ecore_evas_title_set(main_win, "Language Selector");
-    ecore_evas_name_class_set(main_win, "language-selector", "language-selector");
+    ecore_evas_name_class_set(main_win, "language-selector",
+                              "language-selector");
 
-    Evas* main_canvas = ecore_evas_get(main_win);
+    Evas *main_canvas = ecore_evas_get(main_win);
 
-    ecore_evas_callback_delete_request_set(main_win, main_win_close_handler);
+    ecore_evas_callback_delete_request_set(main_win,
+                                           main_win_close_handler);
 
     choicebox_info_t info = {
         NULL,
@@ -100,8 +113,8 @@ static void run()
         close_handler,
     };
 
-    Evas_Object* choicebox = choicebox_new(main_canvas, &info, NULL);
-    if(!choicebox)
+    Evas_Object *choicebox = choicebox_new(main_canvas, &info, NULL);
+    if (!choicebox)
         die("Unable to create choicebox");
 
     choicebox_set_size(choicebox, 60000);
@@ -119,15 +132,16 @@ static void run()
     ecore_main_loop_begin();
 }
 
-int main(int argc, char** argv)
+int
+main(int argc, char **argv)
 {
-    if(!evas_init())
+    if (!evas_init())
         die("Unable to initialize Evas\n");
-    if(!ecore_init())
+    if (!ecore_init())
         die("Unable to initialize Ecore\n");
-    if(!ecore_evas_init())
+    if (!ecore_evas_init())
         die("Unable to initialize Ecore_Evas\n");
-    if(!edje_init())
+    if (!edje_init())
         die("Unable to initialize Edje\n");
 
     run();
