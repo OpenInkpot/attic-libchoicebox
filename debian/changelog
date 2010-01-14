@@ -1,3 +1,13 @@
+libchoicebox (0.2-15) zelazny; urgency=low
+
+  * Rebuild due to updated EFL.
+  * Drop unused ecore-file dependency.
+  * Add eina-0 to list of dependencies.
+  * Move ecore, ecore-evas dependencies to test program, stop linking
+    library with them.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 14 Jan 2010 10:14:40 +0600
+
 libchoicebox (0.2-14) asimov; urgency=low
 
   * Fix text alignment in hinted right "settings" choicebox theme (OI#676)
